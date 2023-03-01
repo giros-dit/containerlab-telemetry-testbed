@@ -1,4 +1,4 @@
-# ContainerLab testbed for studying and analyzing telemetry services
+# ContainerLab testbed for studying and analyzing telemetry services over NETCONF/YANG
 
 ## Prerequisites:
 - Docker: https://docs.docker.com/engine/install/
