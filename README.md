@@ -1,7 +1,7 @@
 # ContainerLab testbed for studying and analyzing telemetry services
 
 ## Prerequisites:
-- Docker: https://docs.docker.com/engine/install/ubuntu/
+- Docker: https://docs.docker.com/engine/install/
 - ContainerLab: https://containerlab.dev/install/
 - A CISCO IOS XE qcow2 image for CSR 1000v devices must be converted and imported so it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr
 
