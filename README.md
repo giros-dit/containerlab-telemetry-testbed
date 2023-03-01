@@ -7,11 +7,44 @@
 
 ## Deploying and destroying the topology
 
-Simply run the deploy shell script (ContainerLab must be installed):
+### Deploying the topology
+
+To deploy the topology, simply run the deploy shell script:
 
 ```
 $ ./deploy.sh
 ```
+
+### Interacting with containers
+
+For **CSR routers**, via SSH to open the CISCO CLI (password is `admin`):
+```
+$ ssh admin@clab-telemetry-testbed-r1 # For r1 router
+
+(or)
+
+$ ssh admin@clab-telemetry-testbed-r2 # For r2 router
+```
+
+or with `docker exec` to open an interactive `bash` Linux shell:
+```
+$ sudo docker exec -it clab-telemetry-testbed-r1 bash # For r1 router
+
+(or)
+
+$ sudo docker exec -it clab-telemetry-testbed-r2 bash # For r2 router
+```
+
+For **Linux containers (clients)**, with `docker exec` to open an interactive shell:
+```
+$ sudo docker exec -it clab-telemetry-testbed-c1 /bin/sh # For c1 client container
+
+(or)
+
+$ sudo docker exec -it clab-telemetry-testbed-r2 /bin/sh # For c2 client container
+```
+
+### Destroying the topology
 
 To destroy the topology, simply run the destroy shell script:
 
