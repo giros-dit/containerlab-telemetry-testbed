@@ -10,13 +10,13 @@
 Simply run the deploy shell script (ContainerLab must be installed):
 
 ```
-./deploy.sh
+$ ./deploy.sh
 ```
 
 To destroy the topology, simply run the destroy shell script:
 
 ```
-./destroy.sh
+$ ./destroy.sh
 ```
 
 ## More
