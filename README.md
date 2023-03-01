@@ -1,5 +1,12 @@
 # ContainerLab testbed for studying and analyzing telemetry services
 
+### CISCO YANG Suite
+
+Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations supported over YANG modules.
+
+- Official GitHub repository with installation instructions: https://github.com/CiscoDevNet/yangsuite
+- Official documentation: https://developer.cisco.com/docs/yangsuite/
+
 ### Related and interesting RFCs:
 
 - RFC 8641: Subscription to YANG Notifications for Datastore Updates -> https://datatracker.ietf.org/doc/html/rfc8641
