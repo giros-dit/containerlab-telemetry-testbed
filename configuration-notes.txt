@@ -1,0 +1,45 @@
+### r1 ###
+configure terminal
+interface GigabitEthernet 2
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+end
+
+configure terminal
+interface GigabitEthernet 3
+ip address 192.168.254.1 255.255.255.0
+no shutdown
+end
+
+configure terminal
+ip route 10.0.2.0 255.255.255.0 192.168.254.2
+end
+### r1 ###
+
+### r2 ###
+configure terminal
+interface GigabitEthernet 2
+ip address 10.0.2.1 255.255.255.0
+no shutdown 
+end
+
+configure terminal
+interface GigabitEthernet 3
+ip address 192.168.254.2 255.255.255.0
+no shutdown
+end
+
+configure terminal
+ip route 10.0.1.0 255.255.255.0 192.168.254.1
+end
+### r2 ###
+
+### c1 ###
+ifconfig eth1 10.0.1.2 netmask 255.255.255.0
+ip route add 10.0.2.0/24 via 10.0.1.1 dev eth1
+### c1 ###
+
+### c2 ###
+ifconfig eth1 10.0.2.2 netmask 255.255.255.0
+ip route add 10.0.1.0/24 via 10.0.2.1 dev eth1
+### c2 ###
