@@ -49,3 +49,4 @@ Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations 
 - YANG models GitHub repository: https://github.com/YangModels/yang
 - YANG Catalog Search: https://yangcatalog.org/yang-search
 - Andrés Ripoll's TFG GitHub repository: https://github.com/andresripoll/TFG_NETCONF
+- NETCONF Telemetry PoC: https://github.com/giros-dit/netconf-telemetry-poc
