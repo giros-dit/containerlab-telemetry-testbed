@@ -45,7 +45,7 @@ $ sudo docker exec -it clab-telemetry-testbed-c1 /bin/sh # For c1 client contain
 
 (or)
 
-$ sudo docker exec -it clab-telemetry-testbed-r2 /bin/sh # For c2 client container
+$ sudo docker exec -it clab-telemetry-testbed-c2 /bin/sh # For c2 client container
 ```
 
 ### Destroying the topology
