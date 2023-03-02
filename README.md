@@ -83,7 +83,7 @@ Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations 
 - Cisco CSR 1000v and Cisco ISRv Software Configuration Guide: https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/configuration/b_CSR1000v_Configuration_Guide.pdf
 - How to Configure a Cisco CSR device using NETCONF/YANG: https://www.fir3net.com/Networking/Concepts-and-Terminology/how-to-configure-a-cisco-csr-using-netconf-yang.html
 - ncclient documentation: https://ncclient.readthedocs.io/en/latest/
-- YANG models GitHub repository: https://github.com/YangModels/yang
+- YANG Models GitHub repository: https://github.com/YangModels/yang
 - YANG Catalog Search: https://yangcatalog.org/yang-search
 - Andrés Ripoll's TFG GitHub repository: https://github.com/andresripoll/TFG_NETCONF
 - NETCONF Telemetry PoC: https://github.com/giros-dit/netconf-telemetry-poc
