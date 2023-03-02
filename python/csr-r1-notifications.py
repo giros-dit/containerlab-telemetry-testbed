@@ -2,7 +2,7 @@ from ncclient import manager
 from ncclient.xml_ import to_ele
 
 r1 = {
-    "host": "clab-demo-r1",
+    "host": "clab-telemetry-testbed-r1",
     "port": 830,
     "username": "admin",
     "password": "admin",
@@ -32,7 +32,7 @@ request = session.dispatch(to_ele(rpc))
 
 print(request)
 
-print("Notifications for device clab-demo-r1...")
+print("Notifications for device clab-telemetry-testbed-r1...")
 
 while True:
     sub_data = session.take_notification()
