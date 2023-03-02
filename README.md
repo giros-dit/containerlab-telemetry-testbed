@@ -5,6 +5,13 @@
 - ContainerLab: https://containerlab.dev/install/
 - A CISCO IOS XE qcow2 image for CSR 1000v devices must be converted and imported so it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr
 
+### Building custom Docker image for Linux clients
+
+```
+$ cd docker/
+$ sudo docker build -t girosdit/clab-telemetry-testbed-ubuntu:latest .
+```
+
 ## Topology
 
 ![](https://github.com/giros-dit/containerlab-telemetry-testbed/blob/main/img/topology.png)
