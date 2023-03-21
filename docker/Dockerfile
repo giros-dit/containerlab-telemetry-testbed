@@ -7,4 +7,4 @@ FROM ubuntu:bionic
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y autoremove && apt-get autoclean
 
 # Other packages are installed
-RUN apt-get install -y iproute2 net-tools ldnsutils traceroute iperf3 tcpdump openssh-server
+RUN apt-get install -y iproute2 iputils-ping net-tools ldnsutils traceroute iperf3 tcpdump openssh-server
