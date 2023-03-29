@@ -89,9 +89,12 @@ Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations 
 
 ### Related and interesting links with additional information
 
+- CISCO DevNet Sandbox: https://developer.cisco.com/site/sandbox/
 - CISCO IOS XE Model Driven Telemetry (for version 17.3.X): https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/173/b_173_programmability_cg/model_driven_telemetry.html
+- CISCO IOS XE Programmability Configuration Guide - NETCONF Protocol (for version 16.7.X): https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/167/b_167_programmability_cg/configuring_yang_datamodel.html?bookSearch=true
 - ContainerLab: CISCO CSRs in containers?!: https://devnetdan.com/2021/12/15/containerlab-cisco-csrs-in-containers/
 - Cisco CSR 1000v and Cisco ISRv Software Configuration Guide: https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/configuration/b_CSR1000v_Configuration_Guide.pdf
+- CISCO Networking Learning Labs: https://developer.cisco.com/learning/search/categories/Networking/
 - How to Configure a Cisco CSR device using NETCONF/YANG: https://www.fir3net.com/Networking/Concepts-and-Terminology/how-to-configure-a-cisco-csr-using-netconf-yang.html
 - ncclient documentation: https://ncclient.readthedocs.io/en/latest/
 - YANG Models GitHub repository: https://github.com/YangModels/yang
