@@ -10,7 +10,7 @@
 
 ## Telemetry testbed topology
 
-![](https://github.com/giros-dit/containerlab-telemetry-testbed/blob/main/img/telemetry-testbed-topology.png)
+![Telemetry testbed topology](img/telemetry-testbed-topology.png)
 
 ## Deploying, playing with, and destroying the topology
 
@@ -60,7 +60,7 @@ $ sudo docker exec -it clab-telemetry-testbed-c2 /bin/sh # For c2 client contain
 
 ### Creation of YANG-Push subscriptions to telemetry data through the NETCONF protocol
 
-In this testbed, YANG-Push subscriptions can be triggered to telemetry data from the Cisco IOS XE CSR1000V network devices, which support YANG data modeling, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used. This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations of YANG-Push](#known-limitations-of-yang-push) section for more details).
+In this testbed, YANG-Push subscriptions can be triggered to telemetry data from the Cisco IOS XE CSR1000V network devices, which support YANG data modeling, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used. This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
 
 There is a simple Python script `ncclient-scripts/csr-r1-create-subscription.py` that allows you to make on-change or periodic subscriptions to an XPath of a specific YANG model for the Cisco IOS XE CSR1000V `r1` node. The script allows parameterizing the XPath, subscription type and subscription period in the case of periodic subscriptions.
 
@@ -96,7 +96,7 @@ Keysight ixia-c-one is a single-container distribution of [ixia-c](https://githu
 
 This lab allows users to validate an IPv4 traffic forwarding scenario between Keysight `ixia-c-one` and Cisco IOS XE CSR1000v nodes (i.e., `r1` and `r2`).
 
-![](https://github.com/giros-dit/containerlab-telemetry-testbed/blob/main/img/telemetry-ixiac-lab-topology.png)
+![IXIA-C laboratory topology](img/telemetry-ixiac-lab-topology.png)
 
 ## Deploying, playing with, and destroying the topology
 
