@@ -1,2 +1,4 @@
 .telemetry-testbed.yaml.bak
+.telemetry-ixiac-lab.yaml.bak
 ./clab-telemetry-testbed
+./clab-telemetry-ixiac-lab
