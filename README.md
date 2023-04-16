@@ -92,7 +92,7 @@ $ ./destroy-testbed-lab.sh
 ## IXIA-C laboratory topology
 This lab consists of a [`Keysight ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. The nodes are also connected with their management interfaces to the containerlab docker network. This lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of ContainerLab.
 
-Keysight ixia-c-one is a single-container distribution of [ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
+`Keysight ixia-c-one` is a single-container distribution of [ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
 
 This lab allows users to validate an IPv4 traffic forwarding scenario between Keysight `ixia-c-one` and Cisco IOS XE CSR1000v nodes (i.e., `r1` and `r2`).
 
@@ -133,7 +133,7 @@ For **IXIA-C container**, with `docker exec` to open an interactive shell:
 $ sudo docker exec -it clab-telemetry-ixiac-lab-ixia-c /bin/sh
 ```
 
-Inside the ixia-c container shell, with `docker ps -a` you can see the ixia-c controller and traffic engine containers:
+Inside the ixia-c container shell, with `docker ps -a` you can see the `ixia-c controller` and `traffic engine` containers:
 ```
 /home/keysight/ixia-c-one # docker ps -a
 CONTAINER ID   IMAGE                            COMMAND                  CREATED        STATUS        PORTS                                            NAMES
@@ -146,10 +146,10 @@ f33030b44e60   ixia-c-traffic-engine:1.4.1.23   "./entrypoint.sh"        27 hour
 
 This lab demonstrates a simple IPv4 traffic forwarding scenario where,
 
-- One Keysight ixia-c-one port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
+- One `Keysight ixia-c-one` port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
 - Cisco IOS XE CSR1000v nodes (i.e., `r1` and `r2`) are configured to forward the traffic in either of the two directions of communication using static routes configuration in the default network instance.
 
-When the lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of ixia-c-one node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
+When the lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
 ```
 $ ./discover_target_mac.sh
 ```
@@ -165,10 +165,10 @@ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming MAC address of r1>"
 - For the traffic test `ixia-c-port2` -> `r2` -> `r1` -> `ixia-c-port1`:
 ```
 cd ixia-c-scripts/
-go run ixia-c-scripts/ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
+go run ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
 ```
 
-The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10.10.1 to 10.20.20.x or from 10.20.20.1 to 10.10.10.x, where x is changed from 1 to 5. Once 1000 packets are sent, the test script checks that we received all the sent packets.
+The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10.10.1 to 10.20.20.X or from 10.20.20.1 to 10.10.10.X, where x is changed from 1 to 5. Once 1000 packets are sent, the test script checks that we received all the sent packets.
 
 
 ### Destroying the topology
