@@ -66,10 +66,10 @@ There is a simple Python script `ncclient-scripts/csr-create-subscription.py` th
 
 To create YANG-Push subscription, run the Python script as follows:
 ```
-$ python3 csr-create-subscription.py <container_name> <XPath> <subscription-type> [<period_in_ms>]
+$ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_ms>]
 ```
 
-> **Peridic subscription example:**
+> **Periodic subscription example:**
 > 
 >```
 >python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/interfaces-state/interface[name='GigabitEthernet2']" periodic 1000
@@ -78,7 +78,7 @@ $ python3 csr-create-subscription.py <container_name> <XPath> <subscription-type
 > **On-change subscription example:**
 > 
 >```
->python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" onchange
+>python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" on-change
 >```
 
 ### Destroying the topology

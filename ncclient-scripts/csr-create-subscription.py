@@ -9,32 +9,32 @@ check_container = subprocess.getoutput("docker ps -a | awk '{print $NF}' | grep 
 if check_container != container_name:
     print("Error - Incorrect arguments")
     print("You need to specify the container name of the network device.")
-    print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription-type> [<period_in_ms>]')
+    print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_ms>]')
     print('Periodic subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/interfaces-state/interface[name=\'GigabitEthernet2\']" periodic 1000')
-    print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" onchange')
+    print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" on-change')
     exit(1)
 else:
     if len(sys.argv) < 4:
         print("Error - Incorrect arguments")
-        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription-type> [<period_in_ms>]')
+        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_ms>]')
         print('Periodic subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/interfaces-state/interface[name=\'GigabitEthernet2\']" periodic 1000')
-        print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" onchange')
+        print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" on-change')
         exit(1)
-    elif sys.argv[3] != "onchange" and sys.argv[3] != "periodic":
+    elif sys.argv[3] != "on-change" and sys.argv[3] != "periodic":
         print("Error - Incorrect arguments")
-        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription-type> [<period_in_ms>]')
+        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_ms>]')
         print('Periodic subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/interfaces-state/interface[name=\'GigabitEthernet2\']" periodic 1000')
-        print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" onchange')
+        print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" on-change')
         exit(1)
     elif sys.argv[3] == "periodic" and len(sys.argv) != 5:
         print("Error - Incorrect arguments for periodic subscription")
-        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription-type> [<period_in_ms>]')
+        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_ms>]')
         print('Periodic subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/interfaces-state/interface[name=\'GigabitEthernet2\']" periodic 1000')
         exit(1)
-    elif sys.argv[3] == "onchange" and len(sys.argv) != 4:
+    elif sys.argv[3] == "on-change" and len(sys.argv) != 4:
         print("Error - Incorrect arguments for on-change subscription")
-        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription-type> [<period_in_ms>]')
-        print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" onchange')
+        print('Usage: python3 csr-r1-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_ms>]')
+        print('On-Change subscription example: python3 csr-r1-create-subscription.py clab-telemetry-ixiac-lab-r1 "/native/hostname" on-change')
         exit(1)
 
 r1 = {
