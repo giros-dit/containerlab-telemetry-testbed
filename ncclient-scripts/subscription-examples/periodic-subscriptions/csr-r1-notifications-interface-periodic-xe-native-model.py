@@ -23,7 +23,7 @@ rpc = """
     xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push">
         <stream>yp:yang-push</stream>
         <yp:xpath-filter>/interfaces-ios-xe-oper:interfaces/interface[name='GigabitEthernet2']/admin-status</yp:xpath-filter>
-        <yp:dampening-period>0</yp:dampening-period>
+        <yp:period>1000</yp:period>
     </establish-subscription>
 
 """
