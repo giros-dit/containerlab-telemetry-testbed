@@ -2,7 +2,7 @@ from ncclient import manager
 from ncclient.xml_ import to_ele
 
 r1 = {
-    "host": "clab-telemetry-testbed-r1",
+    "host": "clab-telemetry-ixiac-lab-r1",
     "port": 830,
     "username": "admin",
     "password": "admin",

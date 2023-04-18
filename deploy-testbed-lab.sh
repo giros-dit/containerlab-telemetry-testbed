@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'Deploying containerlab topology...'
+echo 'Deploying containerlab topology with Cisco IOS XE CSR1000v routers ...'
 
 sudo containerlab deploy --topo telemetry-testbed.yaml
 
