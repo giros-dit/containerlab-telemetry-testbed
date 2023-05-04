@@ -1,6 +1,6 @@
 # ContainerLab testbeds for studying and analyzing telemetry services over NETCONF/YANG
 
-This repository includes [ContainerLab](https://containerlab.dev/install/) testbeds for studying and analyzing Model-Driven Telemetry _(a.k.a. MDT)_ and network management mechanisms using the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)) and the YANG data modeling language ([RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)).
+This repository includes [ContainerLab](https://containerlab.dev/install/) testbeds for studying and analyzing Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms using the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)) and the YANG data modeling language ([RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)).
 
 # Table of Contents
 
@@ -20,8 +20,8 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Deploying the topology](#deploying-the-topology-1)
     - [Interacting with containers](#interacting-with-containers-1)
     - [Generating synthetic traffic with IXIA-C](#generating-synthetic-traffic-with-ixia-c)
-    - [Destroying the topology](#destroying-the-topology-1)
     - [Playing with YANG-Push subscriptions and query operations using NETCONF protocol](#playing-with-yang-push-subscriptions-and-query-operations-using-netconf-protocol)
+    - [Destroying the topology](#destroying-the-topology-1)
 - [Extra information](#extra-information)
     - [Known limitations about YANG-Push](#known-limitations-about-yang-push)
     - [ContainerLab documentation](#containerlab-documentation)
@@ -250,7 +250,7 @@ The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10
 
 ### Playing with YANG-Push subscriptions and query operations using NETCONF protocol
 
-As with the [initial testbed](#telemetry-testbed-topology), this network lab supports MDT and network management mechanisms using the NETCONF protocol and the YANG data modeling language. On the one hand, to play with `YANG-Push` subscriptions via the NETCONF protocol in order to monitor telemetry data from network devices go [here](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol). On the other hand, to play with query operations via the NETCONF protocol to get and set configuration information and to get operational status data from network device go [here](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol).
+As with the [initial testbed](#telemetry-testbed-topology), this network lab supports MDT and network management mechanisms using the NETCONF protocol and the YANG data modeling language. On the one hand, to play with `YANG-Push` subscriptions via the NETCONF protocol in order to monitor telemetry data from network devices go [here](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol). On the other hand, to play with query operations via the NETCONF protocol to get and set configuration information and to get operational status data from network devices go [here](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol).
 
 > **Note:**
 >
