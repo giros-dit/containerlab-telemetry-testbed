@@ -93,11 +93,11 @@ $ sudo docker exec -it clab-telemetry-testbed-c2 /bin/sh # For c2 client contain
 
 ### Creating YANG-Push subscriptions to telemetry data through the NETCONF protocol
 
-In this testbed, YANG-Push ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)) subscriptions can be triggered to telemetry data from the Cisco IOS XE CSR1000V network devices, which support YANG data modeling language, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://ncclient.readthedocs.io/en/latest/) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
+In this testbed, `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)) subscriptions can be triggered to telemetry data from the Cisco IOS XE CSR1000V network devices, which support YANG data modeling language, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://ncclient.readthedocs.io/en/latest/) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
 
 There is a simple Python script [`ncclient-scripts/csr-create-subscription.py`](ncclient-scripts/csr-create-subscription.py) which allows you to make on-change or periodic subscriptions to an XPath of a specific YANG model for a Cisco IOS XE CSR1000V node. The script allows parameterizing the container name of the network device, the XPath, the type of subscription, and the time of the subscription period in centiseconds in the case of periodic subscriptions.
 
-To create a YANG-Push subscription, run the Python script as follows:
+To create a `YANG-Push` subscription, run the Python script as follows:
 ```
 $ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type> [<period_in_cs>]
 ```
@@ -114,7 +114,7 @@ $ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type
 >$ python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" on-change
 >```
 
-Note that there is an alternative python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the parameterization of the YANG-Push subscription data via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml).
+Note that there is an alternative python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the parameterization of the `YANG-Push` subscription data via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml).
 
 ### Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol
 
@@ -250,7 +250,7 @@ The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10
 
 ### Playing with YANG-Push subscriptions and query operations using NETCONF protocol
 
-As with the [initial testbed](#telemetry-testbed-topology), this network lab supports MDT and network management mechanisms using the NETCONF protocol and the YANG data modeling language. On the one hand, to play with YANG-Push subscriptions via the NETCONF protocol in order to monitor telemetry data from network devices go [here](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol). On the other hand, to play with query operations via the NETCONF protocol to get and set configuration information and to get operational status data from network device go [here](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol).
+As with the [initial testbed](#telemetry-testbed-topology), this network lab supports MDT and network management mechanisms using the NETCONF protocol and the YANG data modeling language. On the one hand, to play with `YANG-Push` subscriptions via the NETCONF protocol in order to monitor telemetry data from network devices go [here](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol). On the other hand, to play with query operations via the NETCONF protocol to get and set configuration information and to get operational status data from network device go [here](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol).
 
 > **Note:**
 >
