@@ -144,7 +144,7 @@ $ python3 csr-create-query-get-config-hostname.py <container_name>
 
 - `get` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve. There is a simple Python script [`ncclient-scripts/csr-create-query-get-interface-ietf.py`](ncclient-scripts/csr-create-query-get-interface-ietf.py) that allows you to get the interface configuration and operational status information of a Cisco IOS XE CSR1000V node by making use of the [`ietf-interfaces`](yang/csr1000v/ietf-interfaces%402014-05-08.yang) YANG model. The script allows parameterizing the container name of the network device and optionally the name of the specific interface from which we want to obtain the configuration and operational status information. If no interface is specified, the resulting information will be returned for all available interfaces on the network device. To create the `get` operation to get the interface configuration and operational status information of the network device, run the Python script as follows:
 ```
-$ python3 csr-create-query-get-interface.py <container_name> [<interface_name>]
+$ python3 csr-create-query-get-interface-ietf.py <container_name> [<interface_name>]
 ```
 
 > **Example for the GigabitEthernet1 interface:**
