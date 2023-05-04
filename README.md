@@ -236,14 +236,14 @@ Run the traffic tests with MAC addresses obtained in previous step:
 
 - For the traffic test `ixia-c-port1` -> `r1` -> `r2` -> `ixia-c-port2`:
 ```
-cd ixia-c-scripts/
-go run ipv4_forwarding_r1_r2.go -dstMac="<incoming MAC address of r1>"
+$ cd ixia-c-scripts/
+$ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming MAC address of r1>"
 ```
 
 - For the traffic test `ixia-c-port2` -> `r2` -> `r1` -> `ixia-c-port1`:
 ```
-cd ixia-c-scripts/
-go run ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
+$ cd ixia-c-scripts/
+$ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
 ```
 
 The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10.10.1 to 10.20.20.`X` or from 10.20.20.1 to 10.10.10.`X`, where `X` is changed from 1 to 5. Once 1000 packets are sent, the test script checks that we received all the sent packets.
