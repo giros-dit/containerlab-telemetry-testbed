@@ -1,6 +1,6 @@
 # ContainerLab testbeds for studying and analyzing telemetry services over NETCONF/YANG
 
-This repository includes [ContainerLab](https://containerlab.dev/install/) testbeds for studying and analyzind Model-Driven Telemetry (a.k.a. MDT) and network management mechanisms using the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)) and the YANG data modeling language ([RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)).
+This repository includes [ContainerLab](https://containerlab.dev/install/) testbeds for studying and analyzing Model-Driven Telemetry _(a.k.a. MDT)_ and network management mechanisms using the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)) and the YANG data modeling language ([RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)).
 
 # Table of Contents
 
