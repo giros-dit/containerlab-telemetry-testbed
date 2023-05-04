@@ -1,0 +1,7 @@
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+	<interface>
+		<GigabitEthernet>
+            <name>{{ INTERFACE_INDEX }}</name>
+        </GigabitEthernet>
+	</interface>
+</native>
