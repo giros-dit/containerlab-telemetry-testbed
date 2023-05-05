@@ -166,7 +166,7 @@ Note that for the parameterization of the RPCs in the previous Python scripts th
 
 In this testbed, two additional operations can be triggered for the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following two additional operations:
 
-- 1. Retrieve the set of NETCONF server capabilities supported by the network device, such as _XPath_ filtering support in RPC operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`) and the capability to send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). In addition, this operation retrieves the set of YANG modules that the target network device supports. Each NETCONF capability is identified with a particular URI. There is a simple Python script [`ncclient-scripts/csr-get-server-capabilities.py`](ncclient-scripts/csr-get-server-capabilities.py) that allows you to get the NETCONF capabilities supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device. To discover the NETCONF capabilities of the network device, run the Python script as follows:
+1. Retrieve the set of NETCONF server capabilities supported by the network device, such as _XPath_ filtering support in RPC operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`) and the capability to send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). In addition, this operation retrieves the set of YANG modules that the target network device supports. Each NETCONF capability is identified with a particular URI. There is a simple Python script [`ncclient-scripts/csr-get-server-capabilities.py`](ncclient-scripts/csr-get-server-capabilities.py) that allows you to get the NETCONF capabilities supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device. To discover the NETCONF capabilities of the network device, run the Python script as follows:
 ```
 $ python3 csr-get-server-capabilities.py <container_name> 
 ```
@@ -177,7 +177,7 @@ $ python3 csr-get-server-capabilities.py <container_name>
 >$ python3 csr-get-server-capabilities.py clab-telemetry-testbed-r1
 >```
 
-- 2. Retrieve the schema representation for a particular YANG module supported by the network device using the NETCONF `<get-schema>` RPC operation. There is a simple Python script [`ncclient-scripts/csr-get-yang-module-schema.py`](ncclient-scripts/csr-get-yang-module-schema.py) that allows you to get the schema from a specific YANG module supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the name of the YANG module, and optionally the specific revision/version of the YANG module. To create the `<get-schema>` operation to get the schema representation for a specific YANG module of the network device, run the Python script as follows:
+2. Retrieve the schema representation for a particular YANG module supported by the network device using the NETCONF `<get-schema>` RPC operation ([RFC 6022](https://datatracker.ietf.org/doc/html/rfc6022)). There is a simple Python script [`ncclient-scripts/csr-get-yang-module-schema.py`](ncclient-scripts/csr-get-yang-module-schema.py) that allows you to get the schema from a specific YANG module supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the name of the YANG module, and optionally the specific revision/version of the YANG module. To create the `<get-schema>` operation to get the schema representation for a specific YANG module of the network device, run the Python script as follows:
 ```
 $ python3 csr-get-yang-module-schema.py <container_name> <yang-module-name> [<yang-module-revision>]
 ```
@@ -343,6 +343,7 @@ Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations 
 - RFC 6242: Using the NETCONF Protocol over Secure Shell (SSH): https://datatracker.ietf.org/doc/html/rfc6242
 - RFC 8641: Subscription to YANG Notifications for Datastore Updates: https://datatracker.ietf.org/doc/html/rfc8641
 - RFC 9196: YANG Modules Describing Capabilities for Systems and Datastore Update Notifications: https://datatracker.ietf.org/doc/html/rfc9196
+- RFC 6022: YANG Module for NETCONF Monitoring: https://datatracker.ietf.org/doc/html/rfc6022
 
 ## Related and interesting links with additional information
 
