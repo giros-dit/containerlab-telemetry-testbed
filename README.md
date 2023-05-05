@@ -21,7 +21,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Deploying the topology](#deploying-the-topology-1)
     - [Interacting with containers](#interacting-with-containers-1)
     - [Generating synthetic traffic with IXIA-C](#generating-synthetic-traffic-with-ixia-c)
-    - [Playing with YANG-Push subscriptions and query operations using NETCONF protocol](#playing-with-yang-push-subscriptions-and-query-operations-using-netconf-protocol)
+    - [Playing with YANG-Push subscriptions and additional operations using NETCONF protocol](#playing-with-yang-push-subscriptions-and-additional-operations-using-netconf-protocol)
     - [Destroying the topology](#destroying-the-topology-1)
 - [Extra information](#extra-information)
     - [Known limitations about YANG-Push](#known-limitations-about-yang-push)
