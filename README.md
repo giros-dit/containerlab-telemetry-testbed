@@ -14,6 +14,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Interacting with containers](#interacting-with-containers)
     - [Creating YANG-Push subscriptions to telemetry data through the NETCONF protocol](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol)
     - [Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol)
+    -[Retrieving NETCONF server capabilities and YANG module schemas](#retrieving-netconf-server-capabilities-and-yang-module-schemas)
     - [Destroying the topology](#destroying-the-topology)
 - [IXIA-C laboratory topology](#ixia-c-laboratory-topology)
   - [Deploying, playing with, and destroying the topology](#deploying-playing-with-and-destroying-the-topology-1)
@@ -93,9 +94,9 @@ $ sudo docker exec -it clab-telemetry-testbed-c2 /bin/sh # For c2 client contain
 
 ### Creating YANG-Push subscriptions to telemetry data through the NETCONF protocol
 
-In this testbed, `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)) subscriptions can be triggered to telemetry data from the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://ncclient.readthedocs.io/en/latest/) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
+In this testbed, `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)) subscriptions can be triggered to monitor telemetry data from the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://ncclient.readthedocs.io/en/latest/) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
 
-There is a simple Python script [`ncclient-scripts/csr-create-subscription.py`](ncclient-scripts/csr-create-subscription.py) which allows you to make on-change or periodic subscriptions to an XPath of a specific YANG model for a Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the XPath, the type of subscription, and the time of the subscription period in centiseconds in the case of periodic subscriptions.
+There is a simple Python script [`ncclient-scripts/csr-create-subscription.py`](ncclient-scripts/csr-create-subscription.py) which allows you to make _on-change_ or _periodic_ subscriptions to an [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filter for a specific YANG model for a Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the XPath, the type of subscription, and the time of the subscription period in centiseconds in the case of periodic subscriptions.
 
 To create a `YANG-Push` subscription, run the Python script as follows:
 ```
@@ -114,13 +115,13 @@ $ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type
 >$ python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" on-change
 >```
 
-Note that there is an alternative python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the parameterization of the `YANG-Push` subscription data via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml).
+Note that there is an alternative Python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the mapping and validation of the parameterization data needed for building the RPC operations of the `YANG-Push` subscriptions via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml). This alternative script allows you to parameterize the same arguments as the previous base script.
 
 ### Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol
 
 In this testbed, RPC operations can be triggered to get configuration information and operational status data from the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following NETCONF query operations:
 
-- `edit-config` operation to set the configuration data. It uses a filter to edit only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-edit-config-hostname.py`](ncclient-scripts/csr-create-query-edit-config-hostname.py) that allows you to edit the hostname of a Cisco IOS XE CSR1000v node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device and the desired hostname to be configured. To create the `edit-config` operation to configure the hostname of the network device, run the Python script as follows:
+- `<edit-config>` operation to set the configuration data. It uses a filter to edit only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-edit-config-hostname.py`](ncclient-scripts/csr-create-query-edit-config-hostname.py) that allows you to edit the hostname of a Cisco IOS XE CSR1000v node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device and the desired hostname to be configured. To create the `<edit-config>` operation to configure the hostname of the network device, run the Python script as follows:
 ```
 $ python3 csr-create-query-edit-config-hostname.py <container_name> <hostname>
 ```
@@ -131,7 +132,7 @@ $ python3 csr-create-query-edit-config-hostname.py <container_name> <hostname>
 >$ python3 csr-create-query-edit-config-hostname.py clab-telemetry-testbed-r1 r1-ios-xe-csr1000v
 >```
 
-- `get-config` operation to retrieve the configuration data. It uses a filter to retrieve only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-get-config-hostname.py`](ncclient-scripts/csr-create-query-get-config-hostname.py) that allows you to get the hostname of a Cisco IOS XE CSR1000v node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device. To create the `get-config` operation to get the hostname configuration of the network device, run the Python script as follows:
+- `<get-config>` operation to retrieve the configuration data. It uses a filter to retrieve only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-get-config-hostname.py`](ncclient-scripts/csr-create-query-get-config-hostname.py) that allows you to get the hostname of a Cisco IOS XE CSR1000v node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device. To create the `<get-config>` operation to get the hostname configuration of the network device, run the Python script as follows:
 ```
 $ python3 csr-create-query-get-config-hostname.py <container_name> 
 ```
@@ -142,7 +143,7 @@ $ python3 csr-create-query-get-config-hostname.py <container_name>
 >$ python3 csr-create-query-get-config-hostname.py clab-telemetry-testbed-r1
 >```
 
-- `get` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve. There is a simple Python script [`ncclient-scripts/csr-create-query-get-interface-ietf.py`](ncclient-scripts/csr-create-query-get-interface-ietf.py) that allows you to get the interface configuration and operational status information of a Cisco IOS XE CSR1000v node by making use of the [`ietf-interfaces`](yang/csr1000v/ietf-interfaces%402014-05-08.yang) YANG model. The script allows parameterizing the container name of the network device and optionally the name of the specific interface from which we want to obtain the configuration and operational status information. If no interface is specified, the resulting information will be returned for all available interfaces on the network device. To create the `get` operation to get the interface configuration and operational status information of the network device, run the Python script as follows:
+- `<get>` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve. There is a simple Python script [`ncclient-scripts/csr-create-query-get-interface-ietf.py`](ncclient-scripts/csr-create-query-get-interface-ietf.py) that allows you to get the interface configuration and operational status information of a Cisco IOS XE CSR1000v node by making use of the [`ietf-interfaces`](yang/csr1000v/ietf-interfaces%402014-05-08.yang) YANG model. The script allows parameterizing the container name of the network device and optionally the name of the specific interface from which we want to obtain the configuration and operational status information. If no interface is specified, the resulting information will be returned for all available interfaces on the network device. To create the `<get>` operation to get the interface configuration and operational status information of the network device, run the Python script as follows:
 ```
 $ python3 csr-create-query-get-interface-ietf.py <container_name> [<interface_name>]
 ```
@@ -159,7 +160,33 @@ $ python3 csr-create-query-get-interface-ietf.py <container_name> [<interface_na
 >$ python3 csr-create-query-get-interface-ietf.py clab-telemetry-testbed-r1
 >```
 
-Note that for the parameterization of the previous Python scripts that automate the different query operations, [`Jinja`](https://jinja.palletsprojects.com/) templates decoupled from the Python source code have been used. The regarding Jinja templates are available [here](ncclient-scripts/jinja2-templates/).
+Note that for the parameterization of the RPCs in the previous Python scripts that automate the different query operations, [`Jinja`](https://jinja.palletsprojects.com/) templates decoupled from the Python source code have been used. The regarding Jinja templates are available [here](ncclient-scripts/jinja2-templates/).
+
+### Retrieving NETCONF server capabilities and YANG module schemas
+
+In this testbed, two additional operations can be triggered for the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following two additional operations:
+
+- 1. Retrieve the set of NETCONF server capabilities supported by the network device, such as XPath-based filtering support in protocol operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`)and the capability to send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). In addition, this operation retrieves the set of YANG modules that the target network device supports. Each NETCONF capability is identified with a particular URI. There is a simple Python script [`ncclient-scripts/csr-get-server-capabilities.py`](ncclient-scripts/csr-get-server-capabilities.py) that allows you to get the NETCONF capabilities supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device. To discover the NETCONF capabilities of the network device, run the Python script as follows:
+```
+$ python3 csr-get-server-capabilities.py <container_name> 
+```
+
+> **Example:**
+> 
+>```
+>$ python3 csr-get-server-capabilities.py clab-telemetry-testbed-r1
+>```
+
+- 2. Retrieve the schema representation for a particular YANG module supported by the network device using the NETCONF `<get-schema>` RPC operation. There is a simple Python script [`ncclient-scripts/csr-get-yang-module-schema.py`](ncclient-scripts/csr-get-yang-module-schema.py) that allows you to get the schema from a specific YANG module supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the name of the YANG module, and optionally the specific revision/version of the YANG module. To create the `<get-schema>` operation to get the schema representation for a specific YANG module of the network device, run the Python script as follows:
+```
+$ python3 csr-get-yang-module-schema.py <container_name> <yang-module-name> [<yang-module-revision>]
+```
+
+> **Example:**
+> 
+>```
+>$ python3 csr-get-yang-module-schema.py clab-telemetry-testbed-r1 ietf-interfaces 2014-05-08
+>```
 
 ### Destroying the topology
 
@@ -248,9 +275,9 @@ $ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
 
 The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10.10.1 to 10.20.20.`X` or from 10.20.20.1 to 10.10.10.`X`, where `X` is changed from 1 to 5. Once 1000 packets are sent, the test script checks that we received all the sent packets.
 
-### Playing with YANG-Push subscriptions and query operations using NETCONF protocol
+### Playing with YANG-Push subscriptions and additional operations using NETCONF protocol
 
-As with the [initial testbed](#telemetry-testbed-topology), this network lab supports MDT and network management mechanisms using the NETCONF protocol and the YANG data modeling language. On the one hand, to play with `YANG-Push` subscriptions via the NETCONF protocol in order to monitor telemetry data from network devices go [here](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol). On the other hand, to play with query operations via the NETCONF protocol to get and set configuration information and to get operational status data from network devices go [here](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol).
+As with the [initial testbed](#telemetry-testbed-topology), this network lab supports MDT and network management mechanisms using the NETCONF protocol and the YANG data modeling language. On the one hand, to play with `YANG-Push` subscriptions via the NETCONF protocol in order to monitor telemetry data from network devices go [here](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol). On the other hand, to play with query operations via the NETCONF protocol to get and set configuration information and to get operational status data from network devices go [here](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol). Finally, to play with additional operations for retrieving the NETCONF server capabilities and the YANG module schemas from network devices go [here](#retrieving-netconf-server-capabilities-and-yang-module-schemas)
 
 > **Note:**
 >
