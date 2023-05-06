@@ -7,7 +7,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 - [ContainerLab testbeds for studying and analyzing telemetry services over NETCONF/YANG](#containerlab-testbeds-for-studying-and-analyzing-telemetry-services-over-netconfyang)
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
-- [Telemetry testbed topology](#telemetry-testbed-topology)
+- [Telemetry testbed](#telemetry-testbed)
   - [Deploying, playing with, and destroying the network topology](#deploying-playing-with-and-destroying-the-network-topology)
     - [Building custom Docker image for Linux clients](#building-custom-docker-image-for-linux-clients)
     - [Deploying the network topology](#deploying-the-network-topology)
@@ -16,7 +16,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol)
     - [Retrieving NETCONF server capabilities and YANG module schemas](#retrieving-netconf-server-capabilities-and-yang-module-schemas)
     - [Destroying the network topology](#destroying-the-network-topology)
-- [IXIA-C laboratory topology](#ixia-c-laboratory-topology)
+- [IXIA-C laboratory](#ixia-c-laboratory)
   - [Deploying, playing with, and destroying the network topology](#deploying-playing-with-and-destroying-the-network-topology-1)
     - [Deploying the network topology](#deploying-the-network-topology-1)
     - [Interacting with containers](#interacting-with-containers-1)
@@ -43,9 +43,9 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
 - Go (_Tested with version 1.20.3_)
 
-# Telemetry testbed topology
+# Telemetry testbed
 
-This testbed is network scenario building with `ContainerLab` tool and consisting of model-driven telemetry-capable network devices. These network devices (i.e., `r1` and `r2`) are routers from the Cisco vendor, from the `IOS XE` family and the `CSR1000v` model. These particular router devices support Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms via NETCONF protocol and YANG data modeling language. Among other things, these `Cisco IOS XE CSR1000v` nodes support the basic operations of the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)), have the capability to perform [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filtering on the operations, and allow dynamic subscriptions using `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)). 
+This testbed is a network scenario building with `ContainerLab` tool and consisting of model-driven telemetry-capable network devices. These network devices (i.e., `r1` and `r2`) are routers from the Cisco vendor, from the `IOS XE` family and the `CSR1000v` model. These particular router devices support Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms via NETCONF protocol and YANG data modeling language. Among other things, these `Cisco IOS XE CSR1000v` nodes support the basic operations of the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)), have the capability to perform [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filtering on the operations, and allow dynamic subscriptions using `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)). 
 
 The network topology consists of two `Cisco IOS XE CSR1000v` routers (i.e., `r1` and `r2`) connected via a point-to-point ethernet link, and also two client end-hosts (i.e., `c1` and `c2`) connected via LANs to each router device. The network scenario is configured to have end-to-end connectivity between the client end-hosts. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network.
 
@@ -208,9 +208,9 @@ To destroy the network topology, simply run the destroy shell script:
 $ ./destroy-testbed-lab.sh
 ```
 
-# IXIA-C laboratory topology
+# IXIA-C laboratory
 
-This network lab consists of a [`Keysight ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. The nodes are also connected with their management interfaces to the `ContainerLab` Docker network. This lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `ContainerLab`.
+This network lab is another network scenario building with `ContainerLab` tool and consisting of a [`Keysight ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to the incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. There is another point-to-point ethernet connection configured between the router nodes (i.e., `r1` and `r2`) of the network topology to allow end-to-end traffic forwarding throughout the network. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network. This network lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `ContainerLab`.
 
 `Keysight ixia-c-one` is a single-container distribution of [ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
 
@@ -263,12 +263,12 @@ f33030b44e60   ixia-c-traffic-engine:1.4.1.23   "./entrypoint.sh"        27 hour
 
 ### Generating synthetic traffic with IXIA-C
 
-This lab demonstrates a simple IPv4 traffic forwarding scenario where,
+This network lab demonstrates a simple IPv4 traffic forwarding scenario where,
 
 - One `Keysight ixia-c-one` port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
 - `Cisco IOS XE CSR1000v` nodes (i.e., `r1` and `r2`) are configured to forward the traffic in either of the two directions of communication using static routes configuration in the default network instance.
 
-When the lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
+When the network lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
 ```
 $ ./discover_target_mac.sh
 ```
