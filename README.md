@@ -8,21 +8,21 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
 - [Telemetry testbed topology](#telemetry-testbed-topology)
-  - [Deploying, playing with, and destroying the topology](#deploying-playing-with-and-destroying-the-topology)
+  - [Deploying, playing with, and destroying the network topology](#deploying-playing-with-and-destroying-the-network-topology)
     - [Building custom Docker image for Linux clients](#building-custom-docker-image-for-linux-clients)
-    - [Deploying the topology](#deploying-the-topology)
+    - [Deploying the network topology](#deploying-the-network-topology)
     - [Interacting with containers](#interacting-with-containers)
     - [Creating YANG-Push subscriptions to telemetry data through the NETCONF protocol](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol)
     - [Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol)
     - [Retrieving NETCONF server capabilities and YANG module schemas](#retrieving-netconf-server-capabilities-and-yang-module-schemas)
-    - [Destroying the topology](#destroying-the-topology)
+    - [Destroying the network topology](#destroying-the-network-topology)
 - [IXIA-C laboratory topology](#ixia-c-laboratory-topology)
-  - [Deploying, playing with, and destroying the topology](#deploying-playing-with-and-destroying-the-topology-1)
-    - [Deploying the topology](#deploying-the-topology-1)
+  - [Deploying, playing with, and destroying the network topology](#deploying-playing-with-and-destroying-the-network-topology-1)
+    - [Deploying the network topology](#deploying-the-network-topology-1)
     - [Interacting with containers](#interacting-with-containers-1)
     - [Generating synthetic traffic with IXIA-C](#generating-synthetic-traffic-with-ixia-c)
     - [Playing with YANG-Push subscriptions and additional operations using NETCONF protocol](#playing-with-yang-push-subscriptions-and-additional-operations-using-netconf-protocol)
-    - [Destroying the topology](#destroying-the-topology-1)
+    - [Destroying the network topology](#destroying-the-network-topology-1)
 - [Extra information](#extra-information)
     - [Known limitations about YANG-Push](#known-limitations-about-yang-push)
     - [ContainerLab documentation](#containerlab-documentation)
@@ -45,27 +45,34 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 
 # Telemetry testbed topology
 
+This testbed is network scenario building with `ContainerLab` tool and consisting of model-driven telemetry-capable network devices. These network devices (i.e., `r1` and `r2`) are routers from Cisco vendor of the `IOS XE` family and `CSR1000v` model which support Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms via NETCONF protocol and YANG data modeling language. Among other things, these `Cisco IOS XE CSR1000v` nodes support the basic operations of the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)), have the capability to perform [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filtering on the operations, and allow dynamic subscriptions using `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)). 
+
+The network topology consists of two `Cisco IOS XE CSR1000v` routers (i.e., `r1` and `r2`) connected via a point-to-point ethernet link, and also two client end-hosts (i.e., `c1` and `c2`) connected via LANs to each router device. The network scenario is configured to have end-to-end connectivity between the client end-hosts. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network.
+
+This testbed allows users to study and analyze with MDT and network management mechanisms using the NETCONF protocol and YANG data modeling language.
+
 ![Telemetry testbed topology](img/telemetry-testbed-topology.png)
 
-## Deploying, playing with, and destroying the topology
+## Deploying, playing with, and destroying the network topology
 
 ### Building custom Docker image for Linux clients
 
+To build the custom Docker image for client end-hosts (i.e., `c1` and `c2`), follow the steps below:
 ```
 $ cd docker/
 $ sudo docker build -t girosdit/clab-telemetry-testbed-ubuntu:latest .
 ```
 
-### Deploying the topology
+### Deploying the network topology
 
-To deploy the topology, simply run the deploy shell script:
+To deploy the network topology, simply run the deploy shell script:
 ```
 $ ./deploy-testbed-lab.sh
 ```
 
 ### Interacting with containers
 
-For **CSR routers**, via SSH to open the CISCO CLI (password is `admin`):
+For **CSR 1000v routers**, via SSH to open the CISCO CLI (password is `admin`):
 ```
 $ ssh admin@clab-telemetry-testbed-r1 # For r1 router
 
@@ -94,9 +101,9 @@ $ sudo docker exec -it clab-telemetry-testbed-c2 /bin/sh # For c2 client contain
 
 ### Creating YANG-Push subscriptions to telemetry data through the NETCONF protocol
 
-In this testbed, `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)) subscriptions can be triggered to monitor telemetry data from the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://ncclient.readthedocs.io/en/latest/) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
+In this testbed, `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)) subscriptions can be triggered to monitor telemetry data from the `Cisco IOS XE CSR1000v` network devices, which support YANG data modeling language, via the NETCONF protocol. A NETCONF client Python library called [`ncclient`](https://ncclient.readthedocs.io/en/latest/) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library allows to create dynamic susbcription to YANG modeled data by means of RPC operations in order to receive notifications. The subscription can be of the _on-change_ type or _periodic_ type, and depending on the data to subscribe to, one type of subscription or another will be accepted (see the [Known limitations about YANG-Push](#known-limitations-about-yang-push) section for more details).
 
-There is a simple Python script [`ncclient-scripts/csr-create-subscription.py`](ncclient-scripts/csr-create-subscription.py) which allows you to make _on-change_ or _periodic_ subscriptions to an [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filter for a specific YANG model for a Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the _XPath_, the type of subscription, and the time of the subscription period in centiseconds in the case of periodic subscriptions.
+There is a simple Python script [`ncclient-scripts/csr-create-subscription.py`](ncclient-scripts/csr-create-subscription.py) which allows you to make _on-change_ or _periodic_ subscriptions to an [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filter for a specific YANG model for a `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device, the _XPath_, the type of subscription, and the time of the subscription period in centiseconds in the case of periodic subscriptions.
 
 To create a `YANG-Push` subscription, run the Python script as follows:
 ```
@@ -115,13 +122,15 @@ $ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type
 >$ python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" on-change
 >```
 
-Note that there is an alternative Python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the mapping and validation of the parameterization data needed for building the RPC operations of the `YANG-Push` subscriptions via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml). This alternative script allows you to parameterize the same arguments as the previous base script.
+> **Note:**
+>
+> There is an alternative Python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the mapping and validation of the parameterization data needed for building the RPC of the `YANG-Push` subscriptions via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml). This alternative script allows you to parameterize the same arguments as the previous base script.
 
 ### Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol
 
-In this testbed, RPC operations can be triggered to get configuration information and operational status data from the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following NETCONF query operations:
+In this testbed, RPC operations can be triggered to get configuration information and operational status data from the `Cisco IOS XE CSR1000v` network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following NETCONF query operations:
 
-- `<edit-config>` operation to set the configuration data. It uses a filter to edit only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-edit-config-hostname.py`](ncclient-scripts/csr-create-query-edit-config-hostname.py) that allows you to edit the hostname of a Cisco IOS XE CSR1000v node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device and the desired hostname to be configured. To create the `<edit-config>` operation to configure the hostname of the network device, run the Python script as follows:
+- `<edit-config>` operation to set the configuration data. It uses a filter to edit only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-edit-config-hostname.py`](ncclient-scripts/csr-create-query-edit-config-hostname.py) that allows you to edit the hostname of a `Cisco IOS XE CSR1000v` node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device and the desired hostname to be configured. To create the `<edit-config>` operation to configure the hostname of the network device, run the Python script as follows:
 ```
 $ python3 csr-create-query-edit-config-hostname.py <container_name> <hostname>
 ```
@@ -132,7 +141,7 @@ $ python3 csr-create-query-edit-config-hostname.py <container_name> <hostname>
 >$ python3 csr-create-query-edit-config-hostname.py clab-telemetry-testbed-r1 r1-ios-xe-csr1000v
 >```
 
-- `<get-config>` operation to retrieve the configuration data. It uses a filter to retrieve only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-get-config-hostname.py`](ncclient-scripts/csr-create-query-get-config-hostname.py) that allows you to get the hostname of a Cisco IOS XE CSR1000v node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device. To create the `<get-config>` operation to get the hostname configuration of the network device, run the Python script as follows:
+- `<get-config>` operation to retrieve the configuration data. It uses a filter to retrieve only part of the configuration. There is a simple Python script [`ncclient-scripts/csr-create-query-get-config-hostname.py`](ncclient-scripts/csr-create-query-get-config-hostname.py) that allows you to get the hostname of a `Cisco IOS XE CSR1000v` node by making use of the [`Cisco-IOS-XE-native`](yang/csr1000v/Cisco-IOS-XE-native%402020-07-04.yang) YANG model. The script allows parameterizing the container name of the network device. To create the `<get-config>` operation to get the hostname configuration of the network device, run the Python script as follows:
 ```
 $ python3 csr-create-query-get-config-hostname.py <container_name> 
 ```
@@ -143,7 +152,7 @@ $ python3 csr-create-query-get-config-hostname.py <container_name>
 >$ python3 csr-create-query-get-config-hostname.py clab-telemetry-testbed-r1
 >```
 
-- `<get>` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve. There is a simple Python script [`ncclient-scripts/csr-create-query-get-interface-ietf.py`](ncclient-scripts/csr-create-query-get-interface-ietf.py) that allows you to get the interface configuration and operational status information of a Cisco IOS XE CSR1000v node by making use of the [`ietf-interfaces`](yang/csr1000v/ietf-interfaces%402014-05-08.yang) YANG model. The script allows parameterizing the container name of the network device and optionally the name of the specific interface from which we want to obtain the configuration and operational status information. If no interface is specified, the resulting information will be returned for all available interfaces on the network device. To create the `<get>` operation to get the interface configuration and operational status information of the network device, run the Python script as follows:
+- `<get>` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve. There is a simple Python script [`ncclient-scripts/csr-create-query-get-interface-ietf.py`](ncclient-scripts/csr-create-query-get-interface-ietf.py) that allows you to get the interface configuration and operational status information of a `Cisco IOS XE CSR1000v` node by making use of the [`ietf-interfaces`](yang/csr1000v/ietf-interfaces%402014-05-08.yang) YANG model. The script allows parameterizing the container name of the network device and optionally the name of the specific interface from which we want to obtain the configuration and operational status information. If no interface is specified, the resulting information will be returned for all available interfaces on the network device. To create the `<get>` operation to get the interface configuration and operational status information of the network device, run the Python script as follows:
 ```
 $ python3 csr-create-query-get-interface-ietf.py <container_name> [<interface_name>]
 ```
@@ -160,13 +169,17 @@ $ python3 csr-create-query-get-interface-ietf.py <container_name> [<interface_na
 >$ python3 csr-create-query-get-interface-ietf.py clab-telemetry-testbed-r1
 >```
 
-Note that for the parameterization of the RPCs in the previous Python scripts that automate the different query operations, [`Jinja`](https://jinja.palletsprojects.com/) templates decoupled from the Python source code have been used. The regarding Jinja templates are available [here](ncclient-scripts/jinja2-templates/).
+> **Note:**
+>
+> For the parameterization of the RPC operations in the previous Python scripts that automate the different 
+> queries, [`Jinja`](https://jinja.palletsprojects.com/) templates decoupled from the Python source
+> code have been used. The regarding Jinja templates are available [here](ncclient-scripts/jinja2-templates/).
 
 ### Retrieving NETCONF server capabilities and YANG module schemas
 
-In this testbed, two additional operations can be triggered for the Cisco IOS XE CSR1000v network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following two additional operations:
+In this testbed, two additional operations can be triggered for the `Cisco IOS XE CSR1000v` network devices, which support YANG data modeling language, via the NETCONF protocol. The NETCONF client Python library called [`ncclient`](https://github.com/ncclient/ncclient) is used which supports all operations and capabilities defined by NETCONF ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)). This library supports the following two additional operations:
 
-1. Retrieve the set of NETCONF server capabilities supported by the network device, such as _XPath_ filtering support in RPC operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`) and the capability to send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). In addition, this operation retrieves the set of YANG modules that the target network device supports. Each NETCONF capability is identified with a particular URI. There is a simple Python script [`ncclient-scripts/csr-get-server-capabilities.py`](ncclient-scripts/csr-get-server-capabilities.py) that allows you to get the NETCONF capabilities supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device. To discover the NETCONF capabilities of the network device, run the Python script as follows:
+1. Retrieve the set of NETCONF server capabilities supported by the network device, such as _XPath_ filtering support in RPC operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`) and the capability to send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). In addition, this operation retrieves the set of YANG modules that the target network device supports. Each NETCONF capability is identified with a particular URI. There is a simple Python script [`ncclient-scripts/csr-get-server-capabilities.py`](ncclient-scripts/csr-get-server-capabilities.py) that allows you to get the NETCONF capabilities supported by a particular `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device. To discover the NETCONF capabilities of the network device, run the Python script as follows:
 ```
 $ python3 csr-get-server-capabilities.py <container_name> 
 ```
@@ -177,7 +190,7 @@ $ python3 csr-get-server-capabilities.py <container_name>
 >$ python3 csr-get-server-capabilities.py clab-telemetry-testbed-r1
 >```
 
-2. Retrieve the schema representation for a particular YANG module supported by the network device using the NETCONF `<get-schema>` RPC operation ([RFC 6022](https://datatracker.ietf.org/doc/html/rfc6022)). There is a simple Python script [`ncclient-scripts/csr-get-yang-module-schema.py`](ncclient-scripts/csr-get-yang-module-schema.py) that allows you to get the schema from a specific YANG module supported by a particular Cisco IOS XE CSR1000v node. The script allows parameterizing the container name of the network device, the name of the YANG module, and optionally the specific revision/version of the YANG module. To create the `<get-schema>` operation to get the schema representation for a specific YANG module of the network device, run the Python script as follows:
+2. Retrieve the schema representation for a particular YANG module supported by the network device using the NETCONF `<get-schema>` RPC operation ([RFC 6022](https://datatracker.ietf.org/doc/html/rfc6022)). There is a simple Python script [`ncclient-scripts/csr-get-yang-module-schema.py`](ncclient-scripts/csr-get-yang-module-schema.py) that allows you to get the schema from a specific YANG module supported by a particular `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device, the name of the YANG module, and optionally the specific revision/version of the YANG module. To create the `<get-schema>` operation to get the schema representation for a specific YANG module of the network device, run the Python script as follows:
 ```
 $ python3 csr-get-yang-module-schema.py <container_name> <yang-module-name> [<yang-module-revision>]
 ```
@@ -188,34 +201,35 @@ $ python3 csr-get-yang-module-schema.py <container_name> <yang-module-name> [<ya
 >$ python3 csr-get-yang-module-schema.py clab-telemetry-testbed-r1 ietf-interfaces 2014-05-08
 >```
 
-### Destroying the topology
+### Destroying the network topology
 
-To destroy the topology, simply run the destroy shell script:
+To destroy the network topology, simply run the destroy shell script:
 ```
 $ ./destroy-testbed-lab.sh
 ```
 
 # IXIA-C laboratory topology
-This lab consists of a [`Keysight ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. The nodes are also connected with their management interfaces to the containerlab docker network. This lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of ContainerLab.
+
+This network lab consists of a [`Keysight ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. The nodes are also connected with their management interfaces to the `ContainerLab` Docker network. This lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `ContainerLab`.
 
 `Keysight ixia-c-one` is a single-container distribution of [ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
 
-This lab allows users to validate an IPv4 traffic forwarding scenario between Keysight `ixia-c-one` and Cisco IOS XE CSR1000v nodes (i.e., `r1` and `r2`).
+This network lab allows users to validate an IPv4 traffic forwarding scenario between Keysight `ixia-c-one` and `Cisco IOS XE CSR1000v` nodes (i.e., `r1` and `r2`).
 
 ![IXIA-C laboratory topology](img/telemetry-ixiac-lab-topology.png)
 
-## Deploying, playing with, and destroying the topology
+## Deploying, playing with, and destroying the network topology
 
-### Deploying the topology
+### Deploying the network topology
 
-To deploy the topology, simply run the deploy shell script:
+To deploy the network topology, simply run the deploy shell script:
 ```
 $ ./deploy-ixiac-lab.sh
 ```
 
 ### Interacting with containers
 
-For **CSR routers**, via SSH to open the CISCO CLI (password is `admin`):
+For **CSR 1000v routers**, via SSH to open the CISCO CLI (password is `admin`):
 ```
 $ ssh admin@clab-telemetry-ixiac-lab-r1 # For r1 router
 
@@ -252,7 +266,7 @@ f33030b44e60   ixia-c-traffic-engine:1.4.1.23   "./entrypoint.sh"        27 hour
 This lab demonstrates a simple IPv4 traffic forwarding scenario where,
 
 - One `Keysight ixia-c-one` port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
-- Cisco IOS XE CSR1000v nodes (i.e., `r1` and `r2`) are configured to forward the traffic in either of the two directions of communication using static routes configuration in the default network instance.
+- `Cisco IOS XE CSR1000v` nodes (i.e., `r1` and `r2`) are configured to forward the traffic in either of the two directions of communication using static routes configuration in the default network instance.
 
 When the lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
 ```
@@ -281,11 +295,11 @@ As with the [initial testbed](#telemetry-testbed-topology), this network lab sup
 
 > **Note:**
 >
-> Remember that the name assigned by ContainerLab to the nodes or network devices in this network lab is different.
+> Remember that the name assigned by `ContainerLab` to the nodes or network devices in this network lab is different.
 
-### Destroying the topology
+### Destroying the network topology
 
-To destroy the topology, simply run the destroy shell script:
+To destroy the network topology, simply run the destroy shell script:
 ```
 $ ./destroy-ixiac-lab.sh
 ```
