@@ -210,9 +210,9 @@ $ ./destroy-testbed-lab.sh
 
 # IXIA-C laboratory
 
-This network lab is another network scenario building with `ContainerLab` tool and consisting of a [`Keysight ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to the incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. There is another point-to-point ethernet connection configured between the router nodes (i.e., `r1` and `r2`) of the network topology to allow end-to-end traffic forwarding throughout the network. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network. This network lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `ContainerLab`.
+This network lab is another network scenario building with `ContainerLab` tool and consisting of a [`Keysight Ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to the incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. There is another point-to-point ethernet connection configured between the router nodes (i.e., `r1` and `r2`) of the network topology to allow end-to-end traffic forwarding throughout the network. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network. This network lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `ContainerLab`.
 
-`Keysight ixia-c-one` is a single-container distribution of [ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
+`Keysight Ixia-c-one` is a single-container distribution of [Ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
 
 This network lab allows users to validate an IPv4 traffic forwarding scenario between Keysight `ixia-c-one` and `Cisco IOS XE CSR1000v` nodes (i.e., `r1` and `r2`).
 
@@ -247,12 +247,12 @@ $ sudo docker exec -it clab-telemetry-ixiac-lab-r1 bash # For r1 router
 $ sudo docker exec -it clab-telemetry-ixiac-lab-r2 bash # For r2 router
 ```
 
-For **IXIA-C container**, with `docker exec` to open an interactive shell:
+For **Ixia-c-one container**, with `docker exec` to open an interactive shell:
 ```
 $ sudo docker exec -it clab-telemetry-ixiac-lab-ixia-c /bin/sh
 ```
 
-Inside the ixia-c container shell, with `docker ps -a` you can see the `ixia-c controller` and `traffic engine` containers:
+Inside the **Ixia-c-one container** shell, with `docker ps -a` you can see the `ixia-c-controller` and `xia-c-traffic-engine` containers:
 ```
 /home/keysight/ixia-c-one # docker ps -a
 CONTAINER ID   IMAGE                            COMMAND                  CREATED        STATUS        PORTS                                            NAMES
@@ -265,10 +265,10 @@ f33030b44e60   ixia-c-traffic-engine:1.4.1.23   "./entrypoint.sh"        27 hour
 
 This network lab demonstrates a simple IPv4 traffic forwarding scenario where,
 
-- One `Keysight ixia-c-one` port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
+- One `Keysight Ixia-c-one` port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
 - `Cisco IOS XE CSR1000v` nodes (i.e., `r1` and `r2`) are configured to forward the traffic in either of the two directions of communication using static routes configuration in the default network instance.
 
-When the network lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
+When the network lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `Ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
 ```
 $ ./discover_target_mac.sh
 ```
