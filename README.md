@@ -38,7 +38,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 
 - Docker: https://docs.docker.com/engine/install/
 - ContainerLab: https://containerlab.dev/install/
-- A CISCO IOS XE qcow2 image for CSR 1000v devices must be converted and imported so it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with IOS XE CSR1000v 17.3.4a (a.k.a. 17.03.04a) and IOS XE CSR1000v 17.3.6 (a.k.a. 17.03.06)_.
+- A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported so it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with IOS XE CSR1000v 17.3.4a (a.k.a. 17.03.04a) and IOS XE CSR1000v 17.3.6 (a.k.a. 17.03.06)_.
 - Python 3 (_Tested with version Python 3.8.10_)
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
 - Go (_Tested with version 1.20.3_)
@@ -69,6 +69,14 @@ To deploy the network topology, simply run the deploy shell script:
 ```
 $ ./deploy-testbed-lab.sh
 ```
+
+> **Note 1:**
+>
+> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see the [link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this testbed, you would need a qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The testbed has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models.
+
+> **Note 2:**
+>
+> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2 minutes to boot and load the default configuration accordingly. To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
@@ -227,6 +235,14 @@ To deploy the network topology, simply run the deploy shell script:
 $ ./deploy-ixiac-lab.sh
 ```
 
+> **Note 1:**
+>
+> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see the [link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this network lab, you would need qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The network lab has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models.
+
+> **Note 2:**
+>
+> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2 minutes to boot and load the default configuration accordingly. To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+
 ### Interacting with containers
 
 For **CSR 1000v routers**, via SSH to open the CISCO CLI (password is `admin`):
@@ -329,6 +345,7 @@ $ ./destroy-ixiac-lab.sh
 
 - vrnetlab - VR Network Lab: https://github.com/vrnetlab/vrnetlab
 - vrnetlab - VR Network Lab (ContainerLab fork): https://github.com/hellt/vrnetlab
+- ContainerLab - VM-based routers integration: https://containerlab.dev/manual/vrnetlab/
 
 ## Jinja additional documentation for network automation
 
