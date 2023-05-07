@@ -268,7 +268,7 @@ For **Ixia-c-one container**, with `docker exec` to open an interactive shell:
 $ sudo docker exec -it clab-telemetry-ixiac-lab-ixia-c /bin/sh
 ```
 
-Inside the **Ixia-c-one container** shell, with `docker ps -a` you can see the `ixia-c-controller` and `xia-c-traffic-engine` containers:
+Inside the **Ixia-c-one container** shell, with `docker ps -a` you can see the `ixia-c-controller` and `ixia-c-traffic-engine` containers:
 ```
 /home/keysight/ixia-c-one # docker ps -a
 CONTAINER ID   IMAGE                            COMMAND                  CREATED        STATUS        PORTS                                            NAMES
@@ -345,6 +345,7 @@ $ ./destroy-ixiac-lab.sh
 
 - vrnetlab - VR Network Lab: https://github.com/vrnetlab/vrnetlab
 - vrnetlab - VR Network Lab (ContainerLab fork): https://github.com/hellt/vrnetlab
+- vrnetlab / Cisco CSR1000v: https://github.com/hellt/vrnetlab/tree/master/csr
 - ContainerLab - VM-based routers integration: https://containerlab.dev/manual/vrnetlab/
 
 ## Jinja additional documentation for network automation
