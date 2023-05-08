@@ -36,12 +36,12 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 
 # Prerequisites
 
-- Docker: https://docs.docker.com/engine/install/
-- ContainerLab: https://containerlab.dev/install/
-- A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported so it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with IOS XE CSR1000v 17.3.4a (a.k.a. 17.03.04a) and IOS XE CSR1000v 17.3.6 (a.k.a. 17.03.06)_.
-- Python 3 (_Tested with version Python 3.8.10_)
+- Docker: https://docs.docker.com/engine/install/. _Tested with version 23.0.5_.
+- ContainerLab: https://containerlab.dev/install/. _Tested with version 0.40.0_.
+- A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported as a containerized image in Docker with `vrnetlab` tool, so that it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with `Cisco IOS XE CSR1000v 17.3.4a` (a.k.a. `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (a.k.a. `17.03.06`) models_. Already containerized `Cisco IOS XE CSR1000v` routers consume a large amount of computing resources on the local machine (on the order of 4GB of RAM and 1-2 CPU/vCPU cores per containerized router).
+- Python 3 (_Tested with version Python 3.8.10_).
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
-- Go (_Tested with version 1.20.3_)
+- Go (_Tested with version 1.20.4_).
 
 # Telemetry testbed
 
@@ -76,7 +76,7 @@ $ ./deploy-testbed-lab.sh
 
 > **Note 2:**
 >
-> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2 minutes to boot and load the default configuration accordingly. To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
@@ -241,7 +241,7 @@ $ ./deploy-ixiac-lab.sh
 
 > **Note 2:**
 >
-> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2 minutes to boot and load the default configuration accordingly. To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
