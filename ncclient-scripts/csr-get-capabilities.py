@@ -30,11 +30,11 @@ session = manager.connect(**r)
 
 print ("\nSession ID: ", session.session_id)
 
-# Extract the NETCONF server capabilities
+# Extract the NETCONF capabilities
 capabilities = session.server_capabilities
 
 """
-# Get the NETCONF server capabilities in raw format
+# Get the NETCONF capabilities in raw format
 for item in session.server_capabilities:
     print(item)
 """
