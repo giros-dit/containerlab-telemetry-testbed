@@ -14,7 +14,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Interacting with containers](#interacting-with-containers)
     - [Creating YANG-Push subscriptions to telemetry data through the NETCONF protocol](#creating-yang-push-subscriptions-to-telemetry-data-through-the-netconf-protocol)
     - [Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol](#creating-queries-to-get-and-set-configuration-information-and-to-get-operational-status-data-through-the-netconf-protocol)
-    - [Retrieving NETCONF server capabilities and YANG module schemas](#retrieving-netconf-server-capabilities-and-yang-module-schemas)
+    - [Retrieving NETCONF server capabilities and YANG modules supported by the network device](#retrieving-netconf-server-capabilities-and-yang-modules-supported-by-the-network-device)
     - [Destroying the network topology](#destroying-the-network-topology)
 - [IXIA-C laboratory](#ixia-c-laboratory)
   - [Deploying, playing with, and destroying the network topology](#deploying-playing-with-and-destroying-the-network-topology-1)
