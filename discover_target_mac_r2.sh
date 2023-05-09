@@ -10,9 +10,9 @@ do
     if [[ ${mac:$pos:1} != "." ]]; then
         position=$((position+1))
         new_mac+="${mac:$pos:1}"
-        let resto=$position%2
+        let remainder=$position%2
 
-        if [ $resto -eq 0 ] && [ $pos -le $((len-1)) ]
+        if [ $remainder -eq 0 ] && [ $pos -le $((len-1)) ]
         then
             new_mac+=":"
         fi
