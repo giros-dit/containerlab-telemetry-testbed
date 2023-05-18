@@ -63,7 +63,7 @@ support in RPC operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`)
 send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). 
 Each NETCONF server capability is identified by its particular namespace URI.
 """        
-print("\n- NETCONF server capabilities supported by the network device "+ container_name + ": \n")
+print("\n- NETCONF server extra capabilities supported by the network device "+ container_name + ": \n")
 for capability_key in capabilities:
     capability = capabilities[capability_key]
     if not "module" in capability.parameters:
