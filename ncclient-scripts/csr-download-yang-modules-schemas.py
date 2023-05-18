@@ -1,4 +1,5 @@
 import sys
+import os
 import subprocess
 from ncclient import manager
 
@@ -35,29 +36,39 @@ capabilities = session.server_capabilities
 
 yang_module_name = ""
 yang_module_revision = ""
+yang_module_number = 0
 
 """
 Retrieve the set of YANG modules supported by the network device and save the schema representation of 
 the regarding YANG data model files.
 """
-print("\n - Retrieving the YANG models supported by the network device "+ container_name + ": \n")
+print("\nRetrieving and downloading the YANG models supported by the network device "+ container_name + " ... \n")
 for capability_key in capabilities:
     capability = capabilities[capability_key]
     if "module" in capability.parameters:
         yang_module_name = capability.parameters['module']
+        yang_module_number = yang_module_number + 1
 
         if "revision" in capability.parameters:
             yang_module_revision = capability.parameters['revision'] 
             # Execute the get-schema RPC to get the schema of a particular YANG module
             schema = session.get_schema(identifier=yang_module_name, version=yang_module_revision)
+            print("YANG model" + " " + str(yang_module_number) + ": " + str(capability.parameters)) 
+            print("")
             # Save the YANG module schema as a YANG model file
+            if not os.path.exists("yang-models"):
+                os.makedirs("yang-models")
             with open("./yang-models/{0}@{1}.yang".format(yang_module_name, yang_module_revision), 'w') as file:
                 file.write(schema.data)
         else:
             yang_module_revision = None
             # Execute the get-schema RPC to get the schema of a particular YANG module
             schema = session.get_schema(identifier=yang_module_name, version=yang_module_revision)
+            print("YANG model" + " " + str(yang_module_number) + ": " + str(capability.parameters)) 
+            print("")
             # Save the YANG module schema as a YANG model file
+            if not os.path.exists("yang-models"):
+                os.makedirs("yang-models")
             with open("./yang-models/{0}.yang".format(yang_module_name), 'w') as file:
                 file.write(schema.data)
 
