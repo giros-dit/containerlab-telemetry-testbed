@@ -4,6 +4,9 @@ echo 'Destroying containerlab topology with Cisco IOS XE CSR1000v routers and Ke
 
 sudo containerlab destroy --topo telemetry-ixiac-lab.yaml
 
+sudo rm .telemetry-ixiac-lab.yaml.bak
+sudo rm -Rf clab-telemetry-ixiac-lab/
+
 echo 'Done!'
 
 echo ''
