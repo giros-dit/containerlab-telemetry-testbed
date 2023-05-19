@@ -34,6 +34,7 @@ print ("\nSession ID: ", session.session_id)
 # Extract the NETCONF capabilities
 capabilities = session.server_capabilities
 
+yang_module_supported = False 
 
 """
 Retrieve the set of YANG modules supported by the network device and get only the information about the 
@@ -45,8 +46,12 @@ for capability_key in capabilities:
     if "module" in capability.parameters:
         if capability.parameters['module'] == yang_module_name:
             capability.parameters['namespace_uri'] = capability.namespace_uri
-            print("\nInformation about the YANG module " + str(yang_module_name) + " supported by the network device "+ container_name + ": " + str(capability.parameters)) 
+            print("\nInformation about the requested YANG module " + str(yang_module_name) + " supported by the network device "+ container_name + ": " + str(capability.parameters)) 
             print("")
+            yang_module_supported = True
             break
+
+if yang_module_supported == False:
+    print("\nThe requested YANG module " + str(yang_module_name) + " is not supported by the network device "+ container_name + ".") 
 
 session.close_session()
