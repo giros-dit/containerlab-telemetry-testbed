@@ -72,11 +72,11 @@ $ ./deploy-testbed-lab.sh
 
 > **Note 1:**
 >
-> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see the [link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this testbed, you would need a qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The testbed has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models. To deploy the network topology, the [`deploy-testbed-lab.sh`](deploy-testbed-lab.sh) script executes the `ContainerLab` scenario defined in the [`telemetry-testbed.yaml`](telemetry-testbed.yaml) template in which you need to specify the specific container image generated for the `r1` and `r2` nodes of the topology (e.g., specify `image: vrnetlab/vr-csr:17.03.06` in case of using a `Cisco IOS XE CSR1000v 17.3.6` model image).
+> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see [this link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this testbed, you would need a qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The testbed has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models. To deploy the network topology, the [`deploy-testbed-lab.sh`](deploy-testbed-lab.sh) script executes the `ContainerLab` scenario defined in the [`telemetry-testbed.yaml`](telemetry-testbed.yaml) template in which you need to specify the specific container image generated for the `r1` and `r2` nodes of the topology (e.g., specify `image: vrnetlab/vr-csr:17.03.06` in case of using a `Cisco IOS XE CSR1000v 17.3.6` model image).
 
 > **Note 2:**
 >
-> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+> Once the network scenario is deployed with `ContainerLab`, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
@@ -198,6 +198,17 @@ $ python3 csr-get-server-capabilities.py <container_name>
 >$ python3 csr-get-server-capabilities.py clab-telemetry-testbed-r1
 >```
 
+There is an alternative Python script [`ncclient-scripts/csr-get-yang-module-info.py`](ncclient-scripts/csr-get-yang-module-info.py) that allows you to get only the information about a requested YANG module supported by a particular `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device and the name of the requested YANG module. Then, to get the information from a particular YANG moduel of the network device, run the Python script as follows:
+```
+$ python3 csr-get-yang-module-info.py <container_name> <yang_module_name>
+```
+
+> **Example:**
+> 
+>```
+>$ python3 csr-get-yang-module-info.py clab-telemetry-testbed-r1 ietf-interfaces
+>```
+
 2. Retrieve the schema representation for a particular YANG module supported by the network device using the NETCONF `<get-schema>` RPC operation ([RFC 6022](https://datatracker.ietf.org/doc/html/rfc6022)). There is a simple Python script [`ncclient-scripts/csr-get-yang-module-schema.py`](ncclient-scripts/csr-get-yang-module-schema.py) that allows you to get the schema from a specific YANG module supported by a particular `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device, the name of the YANG module, and optionally the specific revision/version of the YANG module. To create the `<get-schema>` operation to get the schema representation for a specific YANG module of the network device, run the Python script as follows:
 ```
 $ python3 csr-get-yang-module-schema.py <container_name> <yang-module-name> [<yang-module-revision>]
@@ -241,7 +252,7 @@ $ ./deploy-ixiac-lab.sh
 
 > **Note 2:**
 >
-> Once the network scenario is deployed with ContainerLab, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+> Once the network scenario is deployed with `ContainerLab`, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
@@ -324,7 +335,7 @@ $ ./destroy-ixiac-lab.sh
 
 ## Known limitations about YANG-Push
 
-- `YANG-Push` on-change notifications do not work with all datastores. There is a proposed-standard method to know which YANG modules support this kind of notifications (see RFC 9196 linked below), but it is not implemented, at least in the 17.03.04a and 17.03.06 versions of CISCO's IOS XE network operating system. YANG modules `ietf-interfaces`, `openconfig-interfaces` and `cisco-ios-xe-interfaces-oper` do not allow this type of notifications, not even for `oper/admin-status` nodes. Periodic notifications work without issues. According to RFC 8641, page 17, chapter 3.10 (also linked below), "_a publisher supporting on-change notifications may not be able to push on-change updates for some object types_", and some reasons for this are given. While there is an additional method to, apparently, know which modules support on-change notifications (`show platform software ndbman {R0|RP} models` command in IOS CLI) (see [this link](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/1612/b_1612_programmability_cg/model_driven_telemetry.html#id_90796)), it does not seem to match the experimented results.
+- `YANG-Push` on-change notifications do not work with all datastores. There is a proposed-standard method to know which YANG modules support this kind of notifications (see RFC 9196 [linked below](#related-and-interesting-rfcs)), but it is not implemented, at least in the `17.03.04a` and `17.03.06` versions of `CISCO's IOS XE` network operating system. YANG modules `ietf-interfaces`, `openconfig-interfaces` and `cisco-ios-xe-interfaces-oper` do not allow this type of notifications, not even for `oper/admin-status` nodes. Periodic notifications work without issues. According to RFC 8641, page 17, chapter 3.10 (also [linked below](#related-and-interesting-rfcs)), "_a publisher supporting on-change notifications may not be able to push on-change updates for some object types_", and some reasons for this are given. While there is an additional method to, apparently, know which modules support on-change notifications (`show platform software ndbman {R0|RP} models` command in IOS CLI) (see [this link](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/1612/b_1612_programmability_cg/model_driven_telemetry.html#id_90796)), it does not seem to match the experimented results. In addition, the YANG modules `ietf-event-notifications` and `ietf-yang-push`, which include the specifications for supporting _NETCONF Event Notifications_ (see RFC 5277 [linked below](#related-and-interesting-rfcs)) and `YANG Push` subscriptions, indicate that they have the YANG modules `cisco-xe-ietf-event-notifications-deviation` and `cisco-xe-ietf-yang-push-notifications` as deviations.
 
 ## ContainerLab documentation
 
@@ -373,6 +384,7 @@ Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations 
 - RFC 7950: The YANG 1.1 Data Modeling Language: https://datatracker.ietf.org/doc/html/rfc7950
 - RFC 6241: Network Configuration Protocol (NETCONF): https://datatracker.ietf.org/doc/html/rfc6241
 - RFC 6242: Using the NETCONF Protocol over Secure Shell (SSH): https://datatracker.ietf.org/doc/html/rfc6242
+- RFC 5277: NETCONF Event Notifications: https://datatracker.ietf.org/doc/html/rfc5277.html
 - RFC 8641: Subscription to YANG Notifications for Datastore Updates: https://datatracker.ietf.org/doc/html/rfc8641
 - RFC 9196: YANG Modules Describing Capabilities for Systems and Datastore Update Notifications: https://datatracker.ietf.org/doc/html/rfc9196
 - RFC 6022: YANG Module for NETCONF Monitoring: https://datatracker.ietf.org/doc/html/rfc6022
