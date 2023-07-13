@@ -4,7 +4,7 @@ topology:
   nodes:
     c1:
       kind: linux
-      image: girosdit/clab-telemetry-testbed-ubuntu:latest
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
     r1:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
@@ -15,7 +15,7 @@ topology:
       startup-config: r2-config.txt
     c2:
       kind: linux
-      image: girosdit/clab-telemetry-testbed-ubuntu:latest
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
 
   links:
     - endpoints: ["c1:eth1", "r1:eth1"]

@@ -60,7 +60,7 @@ This testbed allows users to study and analyze with MDT and network management m
 To build the custom Docker image for client end-hosts (i.e., `c1` and `c2`), follow the steps below:
 ```
 $ cd docker/
-$ sudo docker build -t girosdit/clab-telemetry-testbed-ubuntu:latest .
+$ sudo docker build -t giros-dit/clab-telemetry-testbed-ubuntu:latest .
 ```
 
 ### Deploying the network topology
