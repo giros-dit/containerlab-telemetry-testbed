@@ -78,7 +78,7 @@ print("\nYANG-Push notifications for XPath " + xpath + " of network device "+ co
 while True:
     sub_data = session.take_notification()
     if (sub_data != None):
-        producer.poll(0)
+        producer.poll()
         producer.produce('interfaces-state-subscriptions', str(sub_data.notification_xml).encode('utf-8'), callback=delivery_report)
     producer.flush()
     print("------------------------")
