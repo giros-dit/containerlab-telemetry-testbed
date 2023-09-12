@@ -6,7 +6,7 @@ from confluent_kafka import Producer
 
 if len(sys.argv) < 4:
     print("Error - Incorrect arguments")
-    print('Usage: python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_ms>')
+    print('Usage: python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_cs>')
     print('Example: python3 csr-create-periodic-subscription-interfaces-state-kafka.py clab-telemetry-testbed-r1 GigabitEthernet1 1000')
     exit(1)
 else:
@@ -15,14 +15,14 @@ else:
 
 if check_container != container_name:
     print("Error - Incorrect arguments: You need to specify the container name of the network device.")
-    print('Usage: python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_ms>')
+    print('Usage: python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_cs>')
     print('Example: python3 csr-create-periodic-subscription-interfaces-state-kafka.py clab-telemetry-testbed-r1 GigabitEthernet1 1000')
     exit(1)
 else:
     if len(sys.argv) != 4:
         print("Error - Incorrect arguments: You need to specify the container name of the network device.")
         print('Error - Incorrect arguments: Period (in ms) must be specified.')
-        print('Usage: python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_ms>')
+        print('Usage: python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_cs>')
         print('Example: python3 csr-create-periodic-subscription-interfaces-state-kafka.py clab-telemetry-testbed-r1 GigabitEthernet1 1000')
         exit(1)
 
@@ -71,7 +71,7 @@ def delivery_report(err, msg):
     if err is not None:
         print('Confluent-Kafka - Message delivery failed: {}'.format(err))
     else:
-        print('Confluent-Kafka - Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
+        print('Confluent-Kafka - Message delivered to topic {} [partition {}]'.format(msg.topic(), msg.partition()))
 
 print("\nYANG-Push notifications for XPath " + xpath + " of network device "+ container_name + ": \n")
 
