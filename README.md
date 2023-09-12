@@ -132,7 +132,7 @@ $ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type
 >$ python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" on-change
 >```
 
-> **Note 1:**
+> **Note:**
 >
 > There is an alternative Python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the mapping and validation of the parameterization data needed for building the RPC of the `YANG-Push` subscriptions via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml). This alternative script allows you to parameterize the same arguments as the previous base script.
 
