@@ -42,7 +42,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 - A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported as a containerized image in Docker with `vrnetlab` tool, so that it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with `Cisco IOS XE CSR1000v 17.3.4a` (a.k.a. `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (a.k.a. `17.03.06`) models_. Already containerized `Cisco IOS XE CSR1000v` routers consume a large amount of computing resources on the local machine (on the order of 4GB of RAM and 1-2 CPU/vCPU cores per containerized router).
 - Python 3 (_Tested with version Python 3.8.10_).
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
-- Python library for [`Apache Kafka](https://kafka.apache.org/) client _confluent-kafka_: https://github.com/confluentinc/confluent-kafka-python
+- Python library for [`Apache Kafka`](https://kafka.apache.org/) client _confluent-kafka_: https://github.com/confluentinc/confluent-kafka-python
 - Go (_Tested with version 1.20.4_).
 
 # Telemetry testbed
