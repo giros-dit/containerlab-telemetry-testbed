@@ -36,11 +36,13 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 
 # Prerequisites
 
-- Docker: https://docs.docker.com/engine/install/. _Tested with version 23.0.5_.
-- ContainerLab: https://containerlab.dev/install/. _Tested with version 0.40.0_.
+- Docker: https://docs.docker.com/engine/install/. _Tested with version 24.0.2_.
+- Docker Compose: https://docs.docker.com/compose/install/. _Tested with version v2.18.1_.
+- ContainerLab: https://containerlab.dev/install/. _Tested with version 0.41.1_.
 - A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported as a containerized image in Docker with `vrnetlab` tool, so that it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with `Cisco IOS XE CSR1000v 17.3.4a` (a.k.a. `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (a.k.a. `17.03.06`) models_. Already containerized `Cisco IOS XE CSR1000v` routers consume a large amount of computing resources on the local machine (on the order of 4GB of RAM and 1-2 CPU/vCPU cores per containerized router).
 - Python 3 (_Tested with version Python 3.8.10_).
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
+- Python library for [`Apache Kafka](https://kafka.apache.org/) client _confluent-kafka_: https://github.com/confluentinc/confluent-kafka-python
 - Go (_Tested with version 1.20.4_).
 
 # Telemetry testbed
@@ -130,9 +132,48 @@ $ python3 csr-create-subscription.py <container_name> <XPath> <subscription_type
 >$ python3 csr-create-subscription.py clab-telemetry-testbed-r1 "/native/hostname" on-change
 >```
 
-> **Note:**
+> **Note 1:**
 >
 > There is an alternative Python script [`ncclient-scripts/csr-create-subscription-jinja2.py`](ncclient-scripts/csr-create-subscription-jinja2.py) which allows the mapping and validation of the parameterization data needed for building the RPC of the `YANG-Push` subscriptions via a [`Jinja`](https://jinja.palletsprojects.com/) template decoupled from the Python source code. The regarding Jinja template is available [here](ncclient-scripts/jinja2-templates/yang-push-subscriptions.xml). This alternative script allows you to parameterize the same arguments as the previous base script.
+
+
+There is a Python script [`csr-create-periodic-subscription-interfaces-state-kafka.py`](ncclient-scripts/csr-create-periodic-subscription-interfaces-state-kafka.py) which allows publishing periodic telemetry notifications as streaming data into a message queue system based on the [`Apache Kafka`](https://kafka.apache.org/) service, thus working as a telemetry data substrate system. The Python script uses the `Apache Kafka` client Python library called (https://github.com/confluentinc/confluent-kafka-python)[`confluent-kafka`]. By default, the script is prepared to periodically subscribe to the state of a router interface and publish the resulting notifications into a `Kafka` topic named `interfaces-state-subscriptions`. To test this script, there is a YAML template (i.e., [`docker-compose.yaml`](docker/docker-compose.yaml)) that allows you to deploy the `Kafka` service as a Docker service with Docker Compose.
+
+To deploy the `Kafka` service simply run the following command:
+```
+$ cd docker/
+$ docker compose up -d
+```
+
+When the `Kafka` service is up, run the Python script as follows:
+```
+$ python3 csr-create-periodic-subscription-interfaces-state-kafka.py <container_name> <interface_name> <period_in_cs> 
+```
+
+> **Example:**
+> 
+>```
+>$ python3 csr-create-periodic-subscription-interfaces-state-kafka.py clab-telemetry-testbed-r1 GigabitEthernet1 1000
+>```
+
+After that, we can access the Kafka container's bash with:
+```bash
+docker exec -it <kafka-container> -- bash
+```
+
+Once inside the Kafka container, if we list the current topics with:
+```bash
+kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+, we will discover that there is a `interfaces-state-subscriptions` topic where the notifications will be published. These notifications can be read by a `Kafka` consumer by running the following command:
+```bash
+kafka-console-consumer.sh --topic interfaces-state-subscriptions --from-beginning --bootstrap-server localhost:9092
+```
+
+To disable the `Kafka` Docker service, simply run the following command:
+```
+$ docker compose down
+```
 
 ### Creating queries to get and set configuration information and to get operational status data through the NETCONF protocol
 
@@ -189,13 +230,13 @@ In this testbed, two additional operations can be triggered for the `Cisco IOS X
 
 1. Retrieve the set of NETCONF server capabilities supported by the network device, such as _XPath_ filtering support in RPC operations (e.g., `urn:ietf:params:netconf:capability:xpath:1.0`) and the capability to send notifications to subscribers (e.g., `urn:ietf:params:netconf:capability:notification:1.0`). In addition, this operation retrieves the set of YANG modules that the target network device supports. Each NETCONF server capability is identified by its particular namespace URI. There is a simple Python script [`ncclient-scripts/csr-get-capabilities.py`](ncclient-scripts/csr-get-capabilities.py) that allows you to get the NETCONF capabilities supported by a particular `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device. To discover the NETCONF capabilities of the network device, run the Python script as follows:
 ```
-$ python3 csr-get-server-capabilities.py <container_name> 
+$ python3 csr-get-capabilities.py <container_name> 
 ```
 
 > **Example:**
 > 
 >```
->$ python3 csr-get-server-capabilities.py clab-telemetry-testbed-r1
+>$ python3 csr-get-capabilities.py clab-telemetry-testbed-r1
 >```
 
 There is an alternative Python script [`ncclient-scripts/csr-get-yang-module-info.py`](ncclient-scripts/csr-get-yang-module-info.py) that allows you to get only the information about a requested YANG module supported by a particular `Cisco IOS XE CSR1000v` node. The script allows parameterizing the container name of the network device and the name of the requested YANG module. Then, to get the information from a particular YANG module of the network device, run the Python script as follows:
@@ -274,12 +315,12 @@ $ sudo docker exec -it clab-telemetry-ixiac-lab-r1 bash # For r1 router
 $ sudo docker exec -it clab-telemetry-ixiac-lab-r2 bash # For r2 router
 ```
 
-For **Ixia-c-one container**, with `docker exec` to open an interactive shell:
+For **Ixia-c-one** container, with `docker exec` to open an interactive shell:
 ```
 $ sudo docker exec -it clab-telemetry-ixiac-lab-ixia-c /bin/sh
 ```
 
-Inside the **Ixia-c-one container** shell, with `docker ps -a` you can see the `ixia-c-controller` and `ixia-c-traffic-engine` containers:
+Inside the **Ixia-c-one** container shell, with `docker ps -a` you can see the `ixia-c-controller` and `ixia-c-traffic-engine` containers:
 ```
 /home/keysight/ixia-c-one # docker ps -a
 CONTAINER ID   IMAGE                            COMMAND                  CREATED        STATUS        PORTS                                            NAMES
