@@ -4,17 +4,25 @@ topology:
   nodes:
     c1:
       kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
       image: giros-dit/clab-telemetry-testbed-ubuntu:latest
     r1:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
+      type: ubuntu-20.04-bionic
+      group: server
       startup-config: r1-config.txt
     r2:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
+      type: ubuntu-20.04-bionic
+      group: server
       startup-config: r2-config.txt
     c2:
       kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
       image: giros-dit/clab-telemetry-testbed-ubuntu:latest
 
   links:
