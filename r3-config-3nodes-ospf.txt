@@ -2,7 +2,7 @@
 
 ! Interfaces configuration
 
-! GigabitEthernet2 (s3 <-> r3)
+! GigabitEthernet2 (c3 <-> r3)
 interface GigabitEthernet2
  ip address 10.0.3.1 255.255.255.0
  no shutdown 
@@ -20,9 +20,11 @@ interface GigabitEthernet4
  no shutdown
 !
 
-! Static routes
-ip route 10.0.1.0 255.255.255.0 192.168.20.1
-ip route 10.0.2.0 255.255.255.0 192.168.30.1
+! OSPF routes
+router ospf 1
+network 10.0.3.0 0.0.0.255 area 1
+network 192.168.20.0 0.0.0.3 area 1
+network 192.168.30.0 0.0.0.3 area 1
 !
 
 !!! END CONFIG !!!
