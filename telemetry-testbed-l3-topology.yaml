@@ -1,0 +1,84 @@
+name: telemetry-testbed-l3-topology
+
+topology:
+  nodes:
+    pc11:
+      kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
+    pc12:
+      kind: linux
+      type: linux-network-multitool
+      group: server
+      image: wbitt/network-multitool:latest
+    pc21:
+      kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
+    pc22:
+      kind: linux
+      type: linux-network-multitool
+      group: server
+      image: wbitt/network-multitool:latest
+    pc31:
+      kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
+    pc32:
+      kind: linux
+      type: linux-network-multitool
+      group: server
+      image: wbitt/network-multitool:latest
+    s1:
+      kind: ceos
+      type: arista-ceos
+      group: switch
+      image: ceos:4.30.3M
+      startup-config: s1-config.txt
+    s2:
+      kind: ceos 
+      type: arista-ceos 
+      group: switch
+      image: ceos:4.30.3M 
+      startup-config: s2-config.txt
+    s3:
+      kind: ceos 
+      type: arista-ceos 
+      group: switch
+      image: ceos:4.30.3M 
+      startup-config: s3-config.txt
+    r1:
+      kind: vr-csr
+      type: cisco-xe-csr1000v
+      group: router
+      image: vrnetlab/vr-csr:17.03.06
+      startup-config: r1-config-3nodes-ospf.txt
+    r2:
+      kind: vr-csr
+      type: cisco-xe-csr1000v
+      group: router
+      image: vrnetlab/vr-csr:17.03.06
+      startup-config: r2-config-3nodes-ospf.txt
+    r3:
+      kind: vr-csr
+      type: cisco-xe-csr1000v
+      group: router
+      image: vrnetlab/vr-csr:17.03.06
+      startup-config: r3-config-3nodes-ospf.txt
+
+  links:
+    - endpoints: ["pc11:eth1", "s1:eth1"]
+    - endpoints: ["pc12:eth1", "s1:eth2"]
+    - endpoints: ["s1:eth3", "r1:eth1"]
+    - endpoints: ["r1:eth2", "r2:eth2"]
+    - endpoints: ["r1:eth3", "r3:eth2"]
+    - endpoints: ["r2:eth3", "r3:eth3"]
+    - endpoints: ["r2:eth1", "s2:eth3"]
+    - endpoints: ["s2:eth2", "pc22:eth1"]
+    - endpoints: ["s2:eth1", "pc21:eth1"]
+    - endpoints: ["r3:eth1", "s3:eth3"]
+    - endpoints: ["s3:eth2", "pc32:eth1"]
+    - endpoints: ["s3:eth1", "pc31:eth1"]

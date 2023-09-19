@@ -1,0 +1,18 @@
+hostname s2
+username admin privilege 15 secret admin
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description "LAN-2 interface"
+   switchport
+!
+interface Ethernet2
+   description "Peering interface with router r2"
+   switchport
+!
+end

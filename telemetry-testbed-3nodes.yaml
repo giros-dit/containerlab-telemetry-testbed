@@ -2,17 +2,17 @@ name: telemetry-testbed-3nodes
 
 topology:
   nodes:
-    s1:
+    pc1:
       kind: linux
       type: ubuntu-20.04-bionic
       group: server
       image: giros-dit/clab-telemetry-testbed-ubuntu:latest
-    s2:
+    pc2:
       kind: linux
       type: ubuntu-20.04-bionic
       group: server
       image: giros-dit/clab-telemetry-testbed-ubuntu:latest
-    s3:
+    pc3:
       kind: linux
       type: ubuntu-20.04-bionic
       group: server
@@ -37,9 +37,9 @@ topology:
       startup-config: r3-config-3nodes.txt
 
   links:
-    - endpoints: ["s1:eth1", "r1:eth1"]
+    - endpoints: ["pc1:eth1", "r1:eth1"]
     - endpoints: ["r1:eth2", "r2:eth2"]
     - endpoints: ["r1:eth3", "r3:eth2"]
     - endpoints: ["r2:eth3", "r3:eth3"]
-    - endpoints: ["r2:eth1", "s2:eth1"]
-    - endpoints: ["r3:eth1", "s3:eth1"]
+    - endpoints: ["r2:eth1", "pc2:eth1"]
+    - endpoints: ["r3:eth1", "pc3:eth1"]

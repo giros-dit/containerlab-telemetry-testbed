@@ -1,6 +1,8 @@
 .telemetry-testbed.yaml.bak
 .telemetry-ixiac-lab.yaml.bak
 .telemetry-testbed-3nodes.yaml.bak
-./clab-telemetry-testbed
-./clab-telemetry-ixiac-lab
-./clab-telemetry-testbed-3nodes
+.telemetry-testbed-l3-topology.yaml.bak
+clab-telemetry-testbed
+clab-telemetry-ixiac-lab
+clab-telemetry-testbed-3nodes
+clab-telemetry-testbed-l3-topology
