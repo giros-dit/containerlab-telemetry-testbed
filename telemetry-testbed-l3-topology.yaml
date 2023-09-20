@@ -54,19 +54,19 @@ topology:
       kind: vr-csr
       type: cisco-xe-csr1000v
       group: router
-      image: vrnetlab/vr-csr:17.03.06
+      image: vrnetlab/vr-csr:17.03.04
       startup-config: r1-config-3nodes-ospf.txt
     r2:
       kind: vr-csr
       type: cisco-xe-csr1000v
       group: router
-      image: vrnetlab/vr-csr:17.03.06
+      image: vrnetlab/vr-csr:17.03.04
       startup-config: r2-config-3nodes-ospf.txt
     r3:
       kind: vr-csr
       type: cisco-xe-csr1000v
       group: router
-      image: vrnetlab/vr-csr:17.03.06
+      image: vrnetlab/vr-csr:17.03.04
       startup-config: r3-config-3nodes-ospf.txt
 
   links:
