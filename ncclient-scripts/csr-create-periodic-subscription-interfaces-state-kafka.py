@@ -2,7 +2,7 @@ import sys
 import subprocess
 from ncclient import manager
 from ncclient.xml_ import to_ele
-from confluent_kafka import Producer
+from kafka import KafkaProducer
 
 if len(sys.argv) < 4:
     print("Error - Incorrect arguments")
@@ -11,7 +11,7 @@ if len(sys.argv) < 4:
     exit(1)
 else:
     container_name = sys.argv[1]
-    check_container = subprocess.getoutput("docker ps -a | awk '{print $NF}' | grep " + container_name)
+    check_container = subprocess.getoutput("sudo docker ps -a | awk '{print $NF}' | grep " + container_name)
 
 if check_container != container_name:
     print("Error - Incorrect arguments: You need to specify the container name of the network device.")
@@ -62,23 +62,12 @@ request = session.dispatch(to_ele(rpc))
 
 print(request)
 
-# The Kafka producer is defined along a callback function to report message delivery result.
-producer = Producer({
-    'bootstrap.servers': 'localhost:9092'
-})
-
-def delivery_report(err, msg):
-    if err is not None:
-        print('Confluent-Kafka - Message delivery failed: {}'.format(err))
-    else:
-        print('Confluent-Kafka - Message delivered to topic {} [partition {}]'.format(msg.topic(), msg.partition()))
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 print("\nYANG-Push notifications for XPath " + xpath + " of network device "+ container_name + ": \n")
 
 while True:
     sub_data = session.take_notification()
     if (sub_data != None):
-        producer.poll(0)
-        producer.produce('interfaces-state-subscriptions', str(sub_data.notification_xml).encode('utf-8'), callback=delivery_report)
+        producer.send('interfaces_state_subscriptions', value=str(sub_data.notification_xml).encode('utf-8'))
     producer.flush()
-    print("------------------------")
