@@ -1,3 +1,5 @@
+!!! Arista cEOS s3 configuration !!!
+
 hostname s3
 username admin privilege 15 secret admin
 !
@@ -7,11 +9,18 @@ management api gnmi
 management api netconf
    transport ssh default
 !
+interface Management0
+   description "Management interface"
+!
 interface Ethernet1
-   description "LAN-3 interface"
+   description "LAN-3 interface with pc31"
    switchport
 !
 interface Ethernet2
+   description "LAN-3 interface with pc32"
+   switchport
+!
+interface Ethernet3
    description "Peering interface with router r3"
    switchport
 !
