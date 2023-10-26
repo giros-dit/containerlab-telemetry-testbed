@@ -17,7 +17,7 @@ topology:
       kind: ceos
       type: arista-ceos
       group: router
-      image: ceos:4.28.0F
+      image: ceos:4.30.3M
       startup-config: r2-ceos-config.txt
     c2:
       kind: linux
