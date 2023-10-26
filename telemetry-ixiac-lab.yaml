@@ -14,7 +14,7 @@ topology:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
       type: ubuntu-20.04-bionic
-      group: server
+      group: router
       startup-config: r1-config-ixiac.txt
       exec:
         - bash -c "ip l show eth1 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}' | head -1"
@@ -22,7 +22,7 @@ topology:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
       type: ubuntu-20.04-bionic
-      group: server
+      group: router
       startup-config: r2-config-ixiac.txt
       exec:
         - bash -c "ip l show eth1 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}' | head -1"
