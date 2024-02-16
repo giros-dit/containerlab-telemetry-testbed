@@ -348,26 +348,26 @@ This network lab demonstrates a simple IPv4 traffic forwarding scenario where,
 >
 >- For the traffic test `ixia-c-port1` -> `r1` -> `r2` >-> `ixia-c-port2`:
 >```
->$ cd ixia-c-scripts/
+>$ cd ixia-c-scripts/old/
 >$ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming >MAC address of r1>"
 >```
 >
 >- For the traffic test `ixia-c-port2` -> `r2` -> `r1` >-> `ixia-c-port1`:
 >```
->$ cd ixia-c-scripts/
+>$ cd ixia-c-scripts/old/
 >$ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming >MAC address of r2>"
 >```
 >
 
 - For the traffic test `ixia-c-port1` -> `r1` -> `r2` -> `ixia-c-port2`:
 ```
-$ cd ixia-c-scripts/
+$ cd ixia-c-scripts/new/
 $ go run ip_forwarding_r1_r2.go
 ```
 
 - For the traffic test `ixia-c-port2` -> `r2` -> `r1` -> `ixia-c-port1`:
 ```
-$ cd ixia-c-scripts/
+$ cd ixia-c-scripts/new/
 $ go run ip_forwarding_r2_r1.go
 ```
 The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10.10.1 to 10.20.20.`X` or from 10.20.20.1 to 10.10.10.`X`, where `X` is changed from 1 to 5. Once 1000 packets are sent, the test script checks that we received all the sent packets.
