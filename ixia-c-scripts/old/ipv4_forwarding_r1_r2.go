@@ -1,12 +1,12 @@
 /*
 Test IPv4 Forwarding with
-- Endpoints: OTG 10.0.2.2 -----> 10.0.2.1 DUT (r2) 192.168.254.2 -----> 192.168.254.1 DUT (r1) 10.0.1.1 -----> OTG 10.0.1.2
-- Static Route on DUT (r2): 10.10.10.0/24 -> 192.168.254.1
-- Static Route on DUT (r1): 10.10.10.0/24 -> 10.0.1.2
-- TCP flow from OTG: 10.20.20.1 -> 10.10.10.1
+- Endpoints: OTG 10.0.1.2 -----> 10.0.1.1 DUT (r1) 192.168.254.1 -----> 192.168.254.2 DUT (r2) 10.0.2.1 -----> OTG 10.0.2.2
+- Static Route on DUT (r1): 10.20.20.0/24 -> 192.168.254.2
+- Static Route on DUT (r2): 10.20.20.0/24 -> 10.0.2.2
+- TCP flow from OTG: 10.10.10.1 -> 10.20.20.1
 
-To run: go run ipv4_forwarding.go -dstMac=<MAC of 10.0.2.1>
-** The MAC address of 10.0.2.1 can be discovered using script "discover_tareget_mac_r2.sh". **
+To run: go run ipv4_forwarding.go -dstMac=<MAC of 10.0.1.1>
+** The MAC address of 10.0.1.1 can be discovered using script "discover_target_mac_r1.sh". **
 */
 
 package main
@@ -21,9 +21,9 @@ import (
 
 // hostname and interfaces of ixia-c-one node from containerlab topology.
 const (
-	otgHost  = "https://clab-telemetry-ixiac-lab-ixia-c"
-	otgPort1 = "eth2"
-	otgPort2 = "eth1"
+	otgHost  = "https://clab-telemetry-ixiac-lab-ixia-c:8443"
+	otgPort1 = "eth1"
+	otgPort2 = "eth2"
 )
 
 var (
@@ -108,8 +108,8 @@ func newConfig() (gosnappi.GosnappiApi, gosnappi.Config) {
 	eth.Src().SetValue(srcMac)
 	eth.Dst().SetValue(dstMac)
 
-	ip.Src().SetValue("10.20.20.1")
-	ip.Dst().Increment().SetStart("10.10.10.1").SetStep("0.0.0.1").SetCount(5)
+	ip.Src().SetValue("10.10.10.1")
+	ip.Dst().Increment().SetStart("10.20.20.1").SetStep("0.0.0.1").SetCount(5)
 
 	tcp.SrcPort().SetValue(3250)
 	tcp.DstPort().Decrement().SetStart(8070).SetStep(2).SetCount(10)

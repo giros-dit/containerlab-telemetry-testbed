@@ -24,15 +24,15 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Playing with YANG-Push subscriptions and additional operations using NETCONF protocol](#playing-with-yang-push-subscriptions-and-additional-operations-using-netconf-protocol)
     - [Destroying the network topology](#destroying-the-network-topology-1)
 - [Extra information](#extra-information)
-    - [Known limitations about YANG-Push](#known-limitations-about-yang-push)
-    - [ContainerLab documentation](#containerlab-documentation)
-    - [IXIA-C additional documentation](#ixia-c-additional-documentation)
-    - [vrnetlab additional documentation](#vrnetlab-additional-documentation)
-    - [Jinja additional documentation for network automation](#jinja-additional-documentation-for-network-automation)
-    - [ncclient additional documentation](#ncclient-additional-documentation)
-    - [CISCO YANG Suite](#cisco-yang-suite)
-    - [Related and interesting RFCs](#related-and-interesting-rfcs)
-    - [Related and interesting links with additional information](#related-and-interesting-links-with-additional-information)
+  - [Known limitations about YANG-Push](#known-limitations-about-yang-push)
+  - [ContainerLab documentation](#containerlab-documentation)
+  - [IXIA-C additional documentation](#ixia-c-additional-documentation)
+  - [vrnetlab additional documentation](#vrnetlab-additional-documentation)
+  - [Jinja additional documentation for network automation](#jinja-additional-documentation-for-network-automation)
+  - [ncclient additional documentation](#ncclient-additional-documentation)
+  - [CISCO YANG Suite](#cisco-yang-suite)
+  - [Related and interesting RFCs](#related-and-interesting-rfcs)
+  - [Related and interesting links with additional information](#related-and-interesting-links-with-additional-information)
 
 # Prerequisites
 
@@ -43,7 +43,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 - Python 3 (_Tested with version Python 3.8.10_).
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
 - Python library for [`Apache Kafka`](https://kafka.apache.org/) client _confluent-kafka_: https://github.com/confluentinc/confluent-kafka-python
-- Go (_Tested with version 1.20.4_).
+- Go (_Tested with version 1.22.0_).
 
 # Telemetry testbed
 
@@ -336,25 +336,40 @@ This network lab demonstrates a simple IPv4 traffic forwarding scenario where,
 - One `Keysight Ixia-c-one` port acts as a transmit port and the other as receive port. Two-way communication can be configured (i.e., `ixia-c-port1` <-> `r1` <-> `r2` <-> `ixia-c-port2`).
 - `Cisco IOS XE CSR1000v` nodes (i.e., `r1` and `r2`) are configured to forward the traffic in either of the two directions of communication using static routes configuration in the default network instance.
 
-When the network lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `Ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
-```
-$ ./discover_target_mac.sh
-```
-
-Run the traffic tests with MAC addresses obtained in previous step:
+> **DEPRECATED:**
+>Only applies with the `telemetry-ixiac-lab-old` scenario started with the `deploy-ixiac-lab-old.sh` script. This release of the scenario uses an older version of `Keysight Ixia-c-one` and an older version of Go v1.20.4.
+>
+>When the network lab is running, we need to fetch the MAC address according to the incoming interface of the router node which is connected to the transmit port of `Ixia-c-one` node. Execute the following script to get the incoming MAC addresses of both router nodes, as they will serve as an argument in the traffic test scripts:
+>```
+>$ ./discover_target_mac.sh
+>```
+>
+>Run the traffic tests with MAC addresses obtained in >previous step:
+>
+>- For the traffic test `ixia-c-port1` -> `r1` -> `r2` >-> `ixia-c-port2`:
+>```
+>$ cd ixia-c-scripts/
+>$ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming >MAC address of r1>"
+>```
+>
+>- For the traffic test `ixia-c-port2` -> `r2` -> `r1` >-> `ixia-c-port1`:
+>```
+>$ cd ixia-c-scripts/
+>$ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming >MAC address of r2>"
+>```
+>
 
 - For the traffic test `ixia-c-port1` -> `r1` -> `r2` -> `ixia-c-port2`:
 ```
 $ cd ixia-c-scripts/
-$ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming MAC address of r1>"
+$ go run ip_forwarding_r1_r2.go
 ```
 
 - For the traffic test `ixia-c-port2` -> `r2` -> `r1` -> `ixia-c-port1`:
 ```
 $ cd ixia-c-scripts/
-$ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
+$ go run ip_forwarding_r2_r1.go
 ```
-
 The tests are configured to send 1000 IPv4 packets with a rate 100pps from 10.10.10.1 to 10.20.20.`X` or from 10.20.20.1 to 10.10.10.`X`, where `X` is changed from 1 to 5. Once 1000 packets are sent, the test script checks that we received all the sent packets.
 
 ### Playing with YANG-Push subscriptions and additional operations using NETCONF protocol
