@@ -349,13 +349,13 @@ This network lab demonstrates a simple IPv4 traffic forwarding scenario where,
 >- For the traffic test `ixia-c-port1` -> `r1` -> `r2` >-> `ixia-c-port2`:
 >```
 >$ cd ixia-c-scripts/old/
->$ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming >MAC address of r1>"
+>$ go run ipv4_forwarding_r1_r2.go -dstMac="<incoming MAC address of r1>"
 >```
 >
 >- For the traffic test `ixia-c-port2` -> `r2` -> `r1` >-> `ixia-c-port1`:
 >```
 >$ cd ixia-c-scripts/old/
->$ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming >MAC address of r2>"
+>$ go run ipv4_forwarding_r2_r1.go -dstMac="<incoming MAC address of r2>"
 >```
 >
 
