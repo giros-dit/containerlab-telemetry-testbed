@@ -1,0 +1,125 @@
+targets:
+  srl:
+    # gNMI target address; CLI flag `--address`
+    address: "clab-telemetry-testbed-srl-ceos-4hosts-r1"
+    # gNMI target user name; CLI flag `--username`
+    username: admin
+    # gNMI target user password; CLI flag `--password`
+    password: NokiaSrl1!
+    # do not verify the target certificate when using tls; CLI flag `--skip-verify`
+    skip-verify: true
+    # log file location; CLI flag `--log-file`
+    log-file: /tmp/gnmic-1.log
+    subscriptions:
+      - srl_traffic_stats
+      - srl_port_stats
+  ceos:
+    # gNMI target address; CLI flag `--address`
+    address: "clab-telemetry-testbed-srl-ceos-4hosts-r2:6030"
+    # gNMI target user name; CLI flag `--username`
+    username: admin
+    # gNMI target user password; CLI flag `--password`
+    password: admin
+    # connection mode; CLI flag `--insecure`
+    insecure: true
+    # log file location; CLI flag `--log-file`
+    log-file: /tmp/gnmic-2.log
+    subscriptions:
+      - ceos_traffic_stats
+      - ceos_port_stats
+subscriptions:
+  srl_traffic_stats:
+    paths:
+      - "/interfaces/interface[name=ethernet-1/1]/state/counters/in-octets"
+      - "/interfaces/interface[name=ethernet-1/1]/state/counters/in-pkts"
+      - "/interfaces/interface[name=ethernet-1/1]/state/counters/out-octets"
+      - "/interfaces/interface[name=ethernet-1/1]/state/counters/out-pkts"
+    stream-mode: sample
+    sample-interval: 5s
+    encoding: JSON_IETF
+    outputs: 
+      - output1-srl
+  srl_port_stats:
+    paths:
+      - "/interfaces/interface[name=ethernet-1/1]/state/admin-status"
+      - "/interfaces/interface[name=ethernet-1/1]/state/oper-status"
+    stream-mode: on-change
+    encoding: JSON_IETF
+    outputs: 
+      - output2-srl
+  ceos_traffic_stats:
+    paths:
+      - "/interfaces/interface[name=Ethernet1]/state/counters/in-octets"
+      - "/interfaces/interface[name=Ethernet1]/state/counters/in-pkts"
+      - "/interfaces/interface[name=Ethernet1]/state/counters/out-octets"
+      - "/interfaces/interface[name=Ethernet1]/state/counters/out-pkts"
+    stream-mode: sample
+    sample-interval: 5s
+    encoding: JSON_IETF
+    outputs: 
+      - output1-ceos
+  ceos_port_stats:
+    paths:
+      - "/interfaces/interface[name=Ethernet1]/state/admin-status"
+      - "/interfaces/interface[name=Ethernet1]/state/oper-status"
+    stream-mode: on-change
+    encoding: JSON_IETF
+    outputs: 
+      - output2-ceos
+outputs:
+  output1-srl:
+    # required
+    type: kafka
+    # Comma separated brokers addresses
+    address: kafka:9092
+    # Kafka topic name
+    topic: traffic-stats-srl
+    max-retry: 2
+    # Kafka connection timeout
+    timeout: 5s
+    # Wait time to reestablish the kafka producer connection after a failure
+    recovery-wait-time: 10s
+    # Exported msg format, json, protojson, prototext, proto, event
+    format: event
+  output2-srl:
+    # required
+    type: kafka
+    # Comma separated brokers addresses
+    address: kafka:9092
+    # Kafka topic name
+    topic: port-stats-srl
+    max-retry: 2
+    # Kafka connection timeout
+    timeout: 5s
+    # Wait time to reestablish the kafka producer connection after a failure
+    recovery-wait-time: 10s
+    # Exported msg format, json, protojson, prototext, proto, event
+    format: event
+  output1-ceos:
+    # required
+    type: kafka
+    # Comma separated brokers addresses
+    address: kafka:9092
+    # Kafka topic name
+    topic: traffic-stats-ceos
+    max-retry: 2
+    # Kafka connection timeout
+    timeout: 5s
+    # Wait time to reestablish the kafka producer connection after a failure
+    recovery-wait-time: 10s
+    # Exported msg format, json, protojson, prototext, proto, event
+    format: event
+  output2-ceos:
+    # required
+    type: kafka
+    # Comma separated brokers addresses
+    address: kafka:9092
+    # Kafka topic name
+    topic: port-stats-ceos
+    max-retry: 2
+    # Kafka connection timeout
+    timeout: 5s
+    # Wait time to reestablish the kafka producer connection after a failure
+    recovery-wait-time: 10s
+    # Exported msg format, json, protojson, prototext, proto, event
+    format: event

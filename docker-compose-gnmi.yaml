@@ -1,0 +1,38 @@
+version: '3'
+services:
+  gnmic-collector:
+    image: ghcr.io/openconfig/gnmic:latest
+    hostname: gnmic-collector
+    container_name: gnmic-collector
+    volumes:
+      - ./docker/gnmic-collector/gnmic-subs-ceos-srl.yaml:/app/gnmic-subs-ceos-srl.yaml
+    command: "subscribe --config /app/gnmic-subs-ceos-srl.yaml --name srl_traffic_stats --name srl_port_stats --name ceos_traffic_stats --name ceos_port_stats"
+  kafka:
+    image: wurstmeister/kafka:latest
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_LOG_DIRS: "/tmp/kafka-logs"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+    logging:
+      driver: none
+  zookeeper:
+    image: zookeeper
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181"
+    logging:
+      driver: none
+networks:
+  default:
+    name: clab
+    external: true

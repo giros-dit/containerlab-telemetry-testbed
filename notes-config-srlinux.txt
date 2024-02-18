@@ -1,0 +1,90 @@
+# enter candidate
+# set / ...
+# commit now
+# save
+A:r1# enter candidate
+Candidate 'default' is not empty
+--{ * candidate shared default }--[  ]--
+A:r1# set / interface ethernet-1/1 admin-state disable
+--{ * candidate shared default }--[  ]--
+A:r1# commit now
+All changes have been committed. Leaving candidate mode.
+--{ + running }--[  ]--
+A:r1# save
+
+# network-instance default
+# show route-table
+A:r1# network-instance default
+--{ running }--[ network-instance default ]--
+A:r1# show route-table
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+IPv4 unicast route table of network instance default
+--------------------------------------------------------------------------------------------------------------------------------------------------------
++----------------+------+-----------+--------------------+---------+---------+--------+-----------+-----------+-----------+-----------+-------------+
+|     Prefix     |  ID  |   Route   |    Route Owner     | Active  | Origin  | Metric |   Pref    | Next-hop  | Next-hop  |  Backup   |   Backup    |
+|                |      |   Type    |                    |         | Network |        |           |  (Type)   | Interface | Next-hop  |  Next-hop   |
+|                |      |           |                    |         | Instanc |        |           |           |           |  (Type)   |  Interface  |
+|                |      |           |                    |         |    e    |        |           |           |           |           |             |
++================+======+===========+====================+=========+=========+========+===========+===========+===========+===========+=============+
+| 10.0.1.0/24    | 2    | local     | net_inst_mgr       | True    | default | 0      | 0         | 10.0.1.1  | ethernet- |           |             |
+|                |      |           |                    |         |         |        |           | (direct)  | 1/1.0     |           |             |
+| 10.0.1.1/32    | 2    | host      | net_inst_mgr       | True    | default | 0      | 0         | None      | None      |           |             |
+|                |      |           |                    |         |         |        |           | (extract) |           |           |             |
+| 10.0.1.255/32  | 2    | host      | net_inst_mgr       | True    | default | 0      | 0         | None (bro |           |           |             |
+|                |      |           |                    |         |         |        |           | adcast)   |           |           |             |
+| 10.0.2.0/24    | 0    | static    | static_route_mgr   | True    | default | 1      | 5         | 192.168.2 | ethernet- |           |             |
+|                |      |           |                    |         |         |        |           | 54.0/24 ( | 1/2.0     |           |             |
+|                |      |           |                    |         |         |        |           | indirect/ |           |           |             |
+|                |      |           |                    |         |         |        |           | local)    |           |           |             |
+| 192.168.254.0/ | 3    | local     | net_inst_mgr       | True    | default | 0      | 0         | 192.168.2 | ethernet- |           |             |
+| 24             |      |           |                    |         |         |        |           | 54.1      | 1/2.0     |           |             |
+|                |      |           |                    |         |         |        |           | (direct)  |           |           |             |
+| 192.168.254.1/ | 3    | host      | net_inst_mgr       | True    | default | 0      | 0         | None      | None      |           |             |
+| 32             |      |           |                    |         |         |        |           | (extract) |           |           |             |
+| 192.168.254.25 | 3    | host      | net_inst_mgr       | True    | default | 0      | 0         | None (bro |           |           |             |
+| 5/32           |      |           |                    |         |         |        |           | adcast)   |           |           |             |
++----------------+------+-----------+--------------------+---------+---------+--------+-----------+-----------+-----------+-----------+-------------+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+IPv4 routes total                    : 7
+IPv4 prefixes with active routes     : 7
+IPv4 prefixes with active ECMP routes: 0
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+--{ running }--[ network-instance default ]--
+
+# show interface
+A:r1# show interface
+========================================================================================================================================================
+ethernet-1/1 is up, speed 100G, type None
+  ethernet-1/1.0 is up
+    Network-instances:
+      * Name: default
+    Encapsulation   : null
+    Type            : routed
+    IPv4 addr    : 10.0.1.1/24 (static, preferred, primary)
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ethernet-1/2 is up, speed 100G, type None
+  ethernet-1/2.0 is up
+    Network-instances:
+      * Name: default
+    Encapsulation   : null
+    Type            : routed
+    IPv4 addr    : 192.168.254.1/24 (static, preferred, primary)
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+mgmt0 is up, speed 1G, type None
+  mgmt0.0 is up
+    Network-instances:
+      * Name: mgmt
+    Encapsulation   : null
+    Type            : None
+    IPv4 addr    : 172.20.20.8/24 (dhcp, preferred)
+    IPv6 addr    : 2001:172:20:20::8/64 (dhcp, preferred)
+    IPv6 addr    : fe80::42:acff:fe14:1408/64 (link-layer, preferred)
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+========================================================================================================================================================
+Summary
+  0 loopback interfaces configured
+  2 ethernet interfaces are up
+  1 management interfaces are up
+  3 subinterfaces are up
+========================================================================================================================================================
+--{ running }--[  ]--
