@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'Destroying containerlab topology with Cisco IOS XE CSR1000v routers and Arista cEOS switches ...'
+echo 'Destroying containerlab topology with Cisco IOS XE CSR1000v routers and Arista cEOS switches...'
 
 sudo containerlab destroy --topo telemetry-testbed-l3-topology.yaml
 

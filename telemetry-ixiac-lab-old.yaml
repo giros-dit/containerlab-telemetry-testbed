@@ -13,7 +13,7 @@ topology:
     r1:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
-      type: ubuntu-20.04-bionic
+      type: cisco-xe-csr1000v
       group: router
       startup-config: r1-config-ixiac.txt
       exec:
@@ -21,7 +21,7 @@ topology:
     r2:
       kind: vr-csr
       image: vrnetlab/vr-csr:17.03.04
-      type: ubuntu-20.04-bionic
+      type: cisco-xe-csr1000v
       group: router
       startup-config: r2-config-ixiac.txt
       exec:

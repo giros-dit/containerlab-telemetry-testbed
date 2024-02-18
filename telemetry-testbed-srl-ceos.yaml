@@ -1,4 +1,4 @@
-name: telemetry-testbed-xe-ceos
+name: telemetry-testbed-srl-ceos
 
 topology:
   nodes:
@@ -8,11 +8,11 @@ topology:
       group: server
       image: giros-dit/clab-telemetry-testbed-ubuntu:latest
     r1:
-      kind: vr-csr
-      image: vrnetlab/vr-csr:17.03.04
-      type: cisco-xe-csr1000v
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+      type: ixr6
       group: router
-      startup-config: r1-config.txt
+      startup-config: srl1.cfg
     r2:
       kind: ceos
       type: arista-ceos
@@ -26,6 +26,6 @@ topology:
       image: giros-dit/clab-telemetry-testbed-ubuntu:latest
 
   links:
-    - endpoints: ["c1:eth1", "r1:eth1"]
-    - endpoints: ["r1:eth2", "r2:eth1"]
+    - endpoints: ["c1:eth1", "r1:e1-1"]
+    - endpoints: ["r1:e1-2", "r2:eth1"]
     - endpoints: ["r2:eth2", "c2:eth1"]

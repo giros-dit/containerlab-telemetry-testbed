@@ -36,19 +36,19 @@ topology:
       kind: ceos
       type: arista-ceos
       group: switch
-      image: ceos:4.30.3M
+      image: ceos:4.30.5M
       startup-config: s1-config.txt
     s2:
       kind: ceos 
       type: arista-ceos 
       group: switch
-      image: ceos:4.30.3M 
+      image: ceos:4.30.5M 
       startup-config: s2-config.txt
     s3:
       kind: ceos 
       type: arista-ceos 
       group: switch
-      image: ceos:4.30.3M 
+      image: ceos:4.30.5M 
       startup-config: s3-config.txt
     r1:
       kind: vr-csr

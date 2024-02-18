@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'Deploying containerlab L3 topology with Cisco IOS XE CSR1000v routers and Arista cEOS switches ...'
+echo 'Deploying containerlab L3 topology with Cisco IOS XE CSR1000v routers and Arista cEOS switches...'
 
 sudo containerlab deploy --topo telemetry-testbed-l3-topology.yaml
 

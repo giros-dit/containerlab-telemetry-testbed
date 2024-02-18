@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'Destroying containerlab topology with Cisco IOS XE CSR1000v routers and Keysight Ixia-C traffic generator ...'
+echo 'Destroying containerlab topology with Cisco IOS XE CSR1000v routers and Keysight Ixia-C traffic generator...'
 
 sudo containerlab destroy --topo telemetry-ixiac-lab-old.yaml
 

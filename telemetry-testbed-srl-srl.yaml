@@ -1,0 +1,31 @@
+name: telemetry-testbed-srl-srl
+
+topology:
+  nodes:
+    c1:
+      kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
+    r1:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+      type: ixr6
+      group: router
+      startup-config: srl1.cfg
+    r2:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux
+      type: ixr6
+      group: router
+      startup-config: srl2.cfg
+    c2:
+      kind: linux
+      type: ubuntu-20.04-bionic
+      group: server
+      image: giros-dit/clab-telemetry-testbed-ubuntu:latest
+
+  links:
+    - endpoints: ["c1:eth1", "r1:e1-1"]
+    - endpoints: ["r1:e1-2", "r2:e1-2"]
+    - endpoints: ["r2:e1-1", "c2:eth1"]
