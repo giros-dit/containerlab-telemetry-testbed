@@ -16,25 +16,25 @@ topology:
       kind: ceos
       type: arista-ceos
       group: switch
-      image: ceos:4.30.5M
+      image: ceos:4.32.4.1M
       startup-config: s1-config.txt
     s2:
       kind: ceos 
       type: arista-ceos 
       group: switch
-      image: ceos:4.30.5M
+      image: ceos:4.32.4.1M
       startup-config: s2-config.txt
     r1:
       kind: ceos
       type: arista-ceos
       group: router
-      image: ceos:4.30.4M
+      image: ceos:4.32.4.1M
       startup-config: r1-ceos-config.txt
     r2:
       kind: ceos
       type: arista-ceos
       group: router
-      image: ceos:4.30.4M
+      image: ceos:4.32.4.1M
       startup-config: r2-ceos-config.txt
     pc21:
       kind: linux
