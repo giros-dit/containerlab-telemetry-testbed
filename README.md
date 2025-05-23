@@ -1,10 +1,10 @@
-# ContainerLab testbeds for studying and analyzing telemetry services over NETCONF/YANG
+# Containerlab testbeds for studying and analyzing telemetry services over YANG
 
-This repository includes [ContainerLab](https://containerlab.dev/install/) testbeds for studying and analyzing Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms using the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)) and the YANG data modeling language ([RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)).
+This repository includes [Containerlab](https://containerlab.dev/install/) testbeds for studying and analyzing Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms using the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)) and the YANG data modeling language ([RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)).
 
 # Table of Contents
 
-- [ContainerLab testbeds for studying and analyzing telemetry services over NETCONF/YANG](#containerlab-testbeds-for-studying-and-analyzing-telemetry-services-over-netconfyang)
+- [Containerlab testbeds for studying and analyzing telemetry services over YANG](#containerlab-testbeds-for-studying-and-analyzing-telemetry-services-over-yang)
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
 - [Telemetry testbed](#telemetry-testbed)
@@ -25,7 +25,7 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
     - [Destroying the network topology](#destroying-the-network-topology-1)
 - [Extra information](#extra-information)
   - [Known limitations about YANG-Push](#known-limitations-about-yang-push)
-  - [ContainerLab documentation](#containerlab-documentation)
+  - [Containerlab documentation](#containerlab-documentation)
   - [IXIA-C additional documentation](#ixia-c-additional-documentation)
   - [vrnetlab additional documentation](#vrnetlab-additional-documentation)
   - [Jinja additional documentation for network automation](#jinja-additional-documentation-for-network-automation)
@@ -38,8 +38,8 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 
 - Docker: https://docs.docker.com/engine/install/. _Tested with version 24.0.2_.
 - Docker Compose: https://docs.docker.com/compose/install/. _Tested with version v2.18.1_.
-- ContainerLab: https://containerlab.dev/install/. _Tested with version 0.41.1_.
-- A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported as a containerized image in Docker with `vrnetlab` tool, so that it can be used with ContainerLab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with `Cisco IOS XE CSR1000v 17.3.4a` (a.k.a. `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (a.k.a. `17.03.06`) models_. Already containerized `Cisco IOS XE CSR1000v` routers consume a large amount of computing resources on the local machine (on the order of 4GB of RAM and 1-2 CPU/vCPU cores per containerized router).
+- Containerlab: https://containerlab.dev/install/. _Tested with version 0.41.1_.
+- A CISCO IOS XE qcow2 image file for CSR 1000v network devices must be converted and imported as a containerized image in Docker with `vrnetlab` tool, so that it can be used with Containerlab: https://github.com/hellt/vrnetlab/tree/master/csr. _Tested with `Cisco IOS XE CSR1000v 17.3.4a` (a.k.a. `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (a.k.a. `17.03.06`) models_. Already containerized `Cisco IOS XE CSR1000v` routers consume a large amount of computing resources on the local machine (on the order of 4GB of RAM and 1-2 CPU/vCPU cores per containerized router).
 - Python 3 (_Tested with version Python 3.8.10_).
 - Python library for NETCONF client _ncclient_: https://github.com/ncclient/ncclient
 - Python library for [`Apache Kafka`](https://kafka.apache.org/) client _confluent-kafka_: https://github.com/confluentinc/confluent-kafka-python
@@ -47,9 +47,9 @@ This repository includes [ContainerLab](https://containerlab.dev/install/) testb
 
 # Telemetry testbed
 
-This testbed is a network scenario building with `ContainerLab` tool and consisting of model-driven telemetry-capable network devices. These network devices (i.e., `r1` and `r2`) are routers from the Cisco vendor, from the `IOS XE` family and the `CSR1000v` model. These particular router devices support Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms via NETCONF protocol and YANG data modeling language. Among other things, these `Cisco IOS XE CSR1000v` nodes support the basic operations of the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)), have the capability to perform [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filtering on the operations, and allow dynamic subscriptions using `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)). 
+This testbed is a network scenario building with `Containerlab` tool and consisting of model-driven telemetry-capable network devices. These network devices (i.e., `r1` and `r2`) are routers from the Cisco vendor, from the `IOS XE` family and the `CSR1000v` model. These particular router devices support Model-Driven Telemetry (_a.k.a._ MDT) and network management mechanisms via NETCONF protocol and YANG data modeling language. Among other things, these `Cisco IOS XE CSR1000v` nodes support the basic operations of the NETCONF protocol ([RFC 6241](https://datatracker.ietf.org/doc/html/rfc6241)), have the capability to perform [_XPath_](https://www.w3.org/TR/1999/REC-xpath-19991116/) filtering on the operations, and allow dynamic subscriptions using `YANG-Push` ([RFC 8641](https://datatracker.ietf.org/doc/html/rfc8641)). 
 
-The network topology consists of two `Cisco IOS XE CSR1000v` routers (i.e., `r1` and `r2`) connected via a point-to-point ethernet link, and also two client end-hosts (i.e., `c1` and `c2`) connected via LANs to each router device. The network scenario is configured to have end-to-end connectivity between the client end-hosts. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network.
+The network topology consists of two `Cisco IOS XE CSR1000v` routers (i.e., `r1` and `r2`) connected via a point-to-point ethernet link, and also two client end-hosts (i.e., `c1` and `c2`) connected via LANs to each router device. The network scenario is configured to have end-to-end connectivity between the client end-hosts. All the nodes are also connected with their management interfaces to the `Containerlab` Docker network.
 
 This testbed allows users to study and analyze with MDT and network management mechanisms using the NETCONF protocol and YANG data modeling language.
 
@@ -74,11 +74,11 @@ $ ./deploy-testbed-lab.sh
 
 > **Note 1:**
 >
-> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see [this link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this testbed, you would need a qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The testbed has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models. To deploy the network topology, the [`deploy-testbed-lab.sh`](deploy-testbed-lab.sh) script executes the `ContainerLab` scenario defined in the [`telemetry-testbed.yaml`](telemetry-testbed.yaml) template in which you need to specify the specific container image generated for the `r1` and `r2` nodes of the topology (e.g., specify `image: vrnetlab/vr-csr:17.03.06` in case of using a `Cisco IOS XE CSR1000v 17.3.6` model image).
+> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see [this link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this testbed, you would need a qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The testbed has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models. To deploy the network topology, the [`deploy-testbed-lab.sh`](deploy-testbed-lab.sh) script executes the `Containerlab` scenario defined in the [`telemetry-testbed.yaml`](telemetry-testbed.yaml) template in which you need to specify the specific container image generated for the `r1` and `r2` nodes of the topology (e.g., specify `image: vrnetlab/vr-csr:17.03.06` in case of using a `Cisco IOS XE CSR1000v 17.3.6` model image).
 
 > **Note 2:**
 >
-> Once the network scenario is deployed with `ContainerLab`, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+> Once the network scenario is deployed with `Containerlab`, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
@@ -270,7 +270,7 @@ $ ./destroy-testbed-lab.sh
 
 # IXIA-C laboratory
 
-This network lab is another network scenario building with `ContainerLab` tool and consisting of a [`Keysight Ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to the incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. There is another point-to-point ethernet connection configured between the router nodes (i.e., `r1` and `r2`) of the network topology to allow end-to-end traffic forwarding throughout the network. All the nodes are also connected with their management interfaces to the `ContainerLab` Docker network. This network lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `ContainerLab`.
+This network lab is another network scenario building with `Containerlab` tool and consisting of a [`Keysight Ixia-c-one`](https://containerlab.dev/manual/kinds/keysight_ixia-c-one/) node with 2 ports connected to the incoming port on `r1` node and the outgoing port on `r2` node via two point-to-point ethernet links. There is another point-to-point ethernet connection configured between the router nodes (i.e., `r1` and `r2`) of the network topology to allow end-to-end traffic forwarding throughout the network. All the nodes are also connected with their management interfaces to the `Containerlab` Docker network. This network lab is based on the [_Keysight IXIA-C and Nokia SR Linux_](https://containerlab.dev/lab-examples/ixiacone-srl/) lab example of `Containerlab`.
 
 `Keysight Ixia-c-one` is a single-container distribution of [Ixia-c](https://github.com/open-traffic-generator/ixia-c), which in turn is Keysight's reference implementation of [Open Traffic Generator API](https://github.com/open-traffic-generator/models). 
 
@@ -289,11 +289,11 @@ $ ./deploy-ixiac-lab.sh
 
 > **Note 1:**
 >
-> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see the [link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this network lab, you would need qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The network lab has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models. To deploy the network topology, the [`deploy-ixiac-lab.sh`](deploy-ixiac-lab.sh) script executes the `ContainerLab` scenario defined in the [`telemetry-ixiac-lab.yaml`](telemetry-ixiac-lab.yaml) template in which you need to specify the specific container image generated for the `r1` and `r2` nodes of the topology (e.g., specify `image: vrnetlab/vr-csr:17.03.06` in case of using a `Cisco IOS XE CSR1000v 17.3.6` model image).
+> The Docker image of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) should be built using the [`vrnetlab`](https://github.com/hellt/vrnetlab) tool before deploying the network topology (see the [link](https://github.com/hellt/vrnetlab/tree/master/csr) for more details). The `vrnetlab` tool enables packaging regular virtual machine images of network operating systems (e.g., VM-based routers) inside a container and make it runnableas as if it was a container image. For this network lab, you would need qcow2 file with a VM-based image of the `Cisco IOS XE CSR1000v` network device. The network lab has beed tested with `Cisco IOS XE CSR1000v 17.3.4a` (_a.k.a._ `17.03.04a`) and `Cisco IOS XE CSR1000v 17.3.6` (_a.k.a._ `17.03.06`) models. To deploy the network topology, the [`deploy-ixiac-lab.sh`](deploy-ixiac-lab.sh) script executes the `Containerlab` scenario defined in the [`telemetry-ixiac-lab.yaml`](telemetry-ixiac-lab.yaml) template in which you need to specify the specific container image generated for the `r1` and `r2` nodes of the topology (e.g., specify `image: vrnetlab/vr-csr:17.03.06` in case of using a `Cisco IOS XE CSR1000v 17.3.6` model image).
 
 > **Note 2:**
 >
-> Once the network scenario is deployed with `ContainerLab`, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
+> Once the network scenario is deployed with `Containerlab`, the containers of the `Cisco IOS XE CSR1000v` router nodes (i.e., `r1` and `r2`) take approximately 2-4 minutes to boot and load the default configuration accordingly (depending on your machine's computing resources). To determine when the containers of the router nodes are ready, you can use the `docker logs -f <container_name>` command, which shows logs of the router's startup and configuration process. Once a log appears with the message `INFO Startup complete in: <TIME>`, the process of starting and configuring the router container will have finished.
 
 ### Interacting with containers
 
@@ -378,7 +378,7 @@ As with the [initial testbed](#telemetry-testbed-topology), this network lab sup
 
 > **Note:**
 >
-> Remember that the name assigned by `ContainerLab` to the nodes or network devices in this network lab is different.
+> Remember that the name assigned by `Containerlab` to the nodes or network devices in this network lab is different.
 
 ### Destroying the network topology
 
@@ -393,9 +393,9 @@ $ ./destroy-ixiac-lab.sh
 
 - `YANG-Push` on-change notifications do not work with all datastores. There is a proposed-standard method to know which YANG modules support this kind of notifications (see RFC 9196 [linked below](#related-and-interesting-rfcs)), but it is not implemented, at least in the `17.03.04a` and `17.03.06` versions of `CISCO's IOS XE` network operating system. YANG modules `ietf-interfaces`, `openconfig-interfaces` and `cisco-ios-xe-interfaces-oper` do not allow this type of notifications, not even for `oper/admin-status` nodes. Periodic notifications work without issues. According to RFC 8641, page 17, chapter 3.10 (also [linked below](#related-and-interesting-rfcs)), "_a publisher supporting on-change notifications may not be able to push on-change updates for some object types_", and some reasons for this are given. While there is an additional method to apparently know which modules support on-change notifications (`show platform software ndbman {R0|RP} models` command in IOS CLI, see [this link](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/1612/b_1612_programmability_cg/model_driven_telemetry.html#id_90796)), it does not seem to match the experimented results. In addition, the YANG modules `ietf-event-notifications` and `ietf-yang-push`, which include the specifications for supporting _NETCONF Event Notifications_ (see RFC 5277 [linked below](#related-and-interesting-rfcs)) and `YANG Push` subscriptions, indicate that they have the YANG modules `cisco-xe-ietf-event-notifications-deviation` and `cisco-xe-ietf-yang-push-notifications` as deviations.
 
-## ContainerLab documentation
+## Containerlab documentation
 
-- ContainerLab home page: https://containerlab.dev/
+- Containerlab home page: https://containerlab.dev/
 - VM-based routers integration: https://containerlab.dev/manual/vrnetlab/
 - Linux containers: https://containerlab.dev/manual/kinds/linux/
 - Keysight IXIA-C One container: https://containerlab.dev/manual/kinds/keysight_ixia-c-one/
@@ -404,16 +404,16 @@ $ ./destroy-ixiac-lab.sh
 ## IXIA-C additional documentation
 
 - Ixia-c _"A powerful traffic generator based on Open Traffic Generator API"_: https://github.com/open-traffic-generator/ixia-c
-- Deploy Ixia-c-one using ContainerLab: https://github.com/open-traffic-generator/ixia-c/blob/main/docs/deployments.md#deploy-ixia-c-one-using-containerlab
+- Deploy Ixia-c-one using Containerlab: https://github.com/open-traffic-generator/ixia-c/blob/main/docs/deployments.md#deploy-ixia-c-one-using-containerlab
 - Open Traffic Generator (OTG): https://github.com/open-traffic-generator
 - Open Traffic Generator APIs & Data Model: https://otg.dev/
 
 ## vrnetlab additional documentation
 
 - vrnetlab - VR Network Lab: https://github.com/vrnetlab/vrnetlab
-- vrnetlab - VR Network Lab (ContainerLab fork): https://github.com/hellt/vrnetlab
+- vrnetlab - VR Network Lab (Containerlab fork): https://github.com/hellt/vrnetlab
 - vrnetlab / Cisco CSR1000v: https://github.com/hellt/vrnetlab/tree/master/csr
-- ContainerLab - VM-based routers integration: https://containerlab.dev/manual/vrnetlab/
+- Containerlab - VM-based routers integration: https://containerlab.dev/manual/vrnetlab/
 
 ## Jinja additional documentation for network automation
 
@@ -450,7 +450,7 @@ Web-based GUI and set of tools to perform NETCONF/RESTCONF/gNMI/gRPC operations 
 - CISCO DevNet Sandbox: https://developer.cisco.com/site/sandbox/
 - CISCO IOS XE Model Driven Telemetry (for version 17.3.X): https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/173/b_173_programmability_cg/model_driven_telemetry.html
 - CISCO IOS XE Programmability Configuration Guide - NETCONF Protocol (for version 16.7.X): https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/167/b_167_programmability_cg/configuring_yang_datamodel.html?bookSearch=true
-- ContainerLab: CISCO CSRs in containers?!: https://devnetdan.com/2021/12/15/containerlab-cisco-csrs-in-containers/
+- Containerlab: CISCO CSRs in containers?!: https://devnetdan.com/2021/12/15/containerlab-cisco-csrs-in-containers/
 - Cisco CSR 1000v and Cisco ISRv Software Configuration Guide: https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/configuration/b_CSR1000v_Configuration_Guide.pdf
 - CISCO Networking Learning Labs: https://developer.cisco.com/learning/search/categories/Networking/
 - How to Configure a Cisco CSR device using NETCONF/YANG: https://www.fir3net.com/Networking/Concepts-and-Terminology/how-to-configure-a-cisco-csr-using-netconf-yang.html
