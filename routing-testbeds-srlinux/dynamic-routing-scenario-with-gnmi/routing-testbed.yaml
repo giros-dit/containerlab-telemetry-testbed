@@ -1,0 +1,59 @@
+name: routing-testbed
+
+topology:
+
+  kinds:
+    linux:
+      type: linux-network-multitool
+      group: server
+      image: wbitt/network-multitool:latest
+    nokia_srlinux:
+      type: ixr-d2l
+      group: router
+      image: ghcr.io/nokia/srlinux:latest
+    ovs-bridge:
+      type: ovs-bridge
+      group: switch
+
+  nodes:
+    pc11:
+      kind: linux
+    pc12:
+      kind: linux
+    pc21:
+      kind: linux
+    pc22:
+      kind: linux
+    pc31:
+      kind: linux
+    pc32:
+      kind: linux
+    s1:
+      kind: ovs-bridge
+    s2:
+      kind: ovs-bridge
+    s3:
+      kind: ovs-bridge
+    r1:
+      kind: nokia_srlinux
+      startup-config: r1.cfg
+    r2:
+      kind: nokia_srlinux
+      startup-config: r2.cfg
+    r3:
+      kind: nokia_srlinux
+      startup-config: r3.cfg
+
+  links:
+    - endpoints: ["pc11:eth1", "s1:s1-eth1"]
+    - endpoints: ["pc12:eth1", "s1:s1-eth2"]
+    - endpoints: ["s1:s1-eth3", "r1:e1-1"]
+    - endpoints: ["r1:e1-2", "r2:e1-2"]
+    - endpoints: ["r1:e1-3", "r3:e1-2"]
+    - endpoints: ["r2:e1-3", "r3:e1-3"]
+    - endpoints: ["r2:e1-1", "s2:s2-eth3"]
+    - endpoints: ["s2:s2-eth1", "pc21:eth1"]
+    - endpoints: ["s2:s2-eth2", "pc22:eth1"]
+    - endpoints: ["r3:e1-1", "s3:s3-eth3"]
+    - endpoints: ["s3:s3-eth1", "pc31:eth1"]
+    - endpoints: ["s3:s3-eth2", "pc32:eth1"]

@@ -1,0 +1,20 @@
+updates:
+
+updates:
+
+  # Protocol STATIC
+  - path: /network-instances/network-instance[name=default]/protocols/protocol[identifier=STATIC][name=STATIC]
+    encoding: json_ietf
+    value:
+      config:
+        identifier: STATIC
+        name: STATIC
+        enabled: true
+
+  # Static route
+  - path: /network-instances/network-instance[name=default]/protocols/protocol[identifier=STATIC][name=STATIC]/static-routes/static[prefix={{.Vars.PREFIX}}]/next-hops/next-hop[index=1]
+    encoding: json_ietf
+    value:
+      config:
+        next-hop: {{.Vars.NEXT_HOP}}
+        metric: 0

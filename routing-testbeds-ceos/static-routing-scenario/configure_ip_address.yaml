@@ -1,0 +1,26 @@
+updates:
+
+  # Interface base config (OpenConfig)
+  - path: /interfaces/interface[name={{.Vars.IF_NAME}}]
+    encoding: json_ietf
+    value:
+      config:
+        name: {{.Vars.IF_NAME}}
+        type: ethernetCsmacd
+        enabled: true
+
+  # Subinterface config (OpenConfig)
+  - path: /interfaces/interface[name={{.Vars.IF_NAME}}]/subinterfaces/subinterface[index=0]
+    encoding: json_ietf
+    value:
+      config:
+        index: 0
+        enabled: true
+
+  # IP address config (OpenConfig)
+  - path: /interfaces/interface[name={{.Vars.IF_NAME}}]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip={{.Vars.IF_IP}}]
+    encoding: json_ietf
+    value:
+      config:
+        ip: {{.Vars.IF_IP}}
+        prefix-length: {{.Vars.PREFIX}}

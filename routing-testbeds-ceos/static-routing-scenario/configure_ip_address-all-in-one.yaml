@@ -1,0 +1,23 @@
+updates:
+
+  # Interface config (OpenConfig)
+  - path: /interfaces/interface[name={{.Vars.IF_NAME}}]
+    encoding: json_ietf
+    value:
+      config:
+        name: {{.Vars.IF_NAME}}
+        type: ethernetCsmacd
+        enabled: true
+      subinterfaces:
+        subinterface:
+          - index: 0
+            config:
+              index: 0
+              enabled: true
+            ipv4:
+              addresses:
+                address:
+                  - ip: {{.Vars.IF_IP}}
+                    config:
+                      ip: {{.Vars.IF_IP}}
+                      prefix-length: {{.Vars.PREFIX}}
