@@ -1,0 +1,74 @@
+!!! Arista cEOS r3 configuration !!!
+
+hostname r3
+username admin privilege 15 secret admin
+!
+ip access-list custom-cp
+   10 permit icmp any any
+   20 permit ip any any tracked
+   30 permit udp any any eq bfd ttl eq 255
+   40 permit udp any any eq bfd-echo ttl eq 254
+   50 permit udp any any eq multihop-bfd micro-bfd sbfd
+   60 permit udp any eq sbfd any eq sbfd-initiator
+   70 permit ospf any any
+   80 permit tcp any any eq ssh telnet www snmp bgp https msdp ldp netconf-ssh gnmi
+   90 permit udp any any eq bootps bootpc snmp rip ntp ldp ptp-event ptp-general
+   100 permit tcp any any eq mlag ttl eq 255
+   110 permit udp any any eq mlag ttl eq 255
+   120 permit vrrp any any
+   130 permit ahp any any
+   140 permit pim any any
+   150 permit igmp any any
+   160 permit tcp any any range 5900 5910
+   170 permit tcp any any range 50000 50100
+   180 permit udp any any range 51000 51100
+   190 permit tcp any any eq 3333
+   200 permit tcp any any eq nat ttl eq 255
+   210 permit tcp any eq bgp any
+   220 permit rsvp any any
+   230 permit tcp any any eq 9340
+   240 permit tcp any any eq 9559
+   250 permit udp any any eq 8503
+   260 permit udp any any eq lsp-ping
+   270 permit udp any eq lsp-ping any
+   280 permit tcp any any eq 5900
+!
+system control-plane
+   ip access-group custom-cp in
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Management0
+   description "Management interface"
+!
+interface Ethernet1
+   description "LAN interface with switch s3"
+   no switchport
+!
+interface Ethernet2
+   description "Peering interface with router r1 (r3 <-> r1)"
+   no switchport
+!
+interface Ethernet3
+   description "Peering interface with router r2 (r3 <-> r2)"
+   no switchport
+!
+ip routing
+!
+security pki certificate generate self-signed restconf.crt key restconf.key generate rsa 2048 parameters common-name restconf
+!   
+management security 
+   ssl profile restconf
+   certificate restconf.crt key restconf.key
+!
+management api restconf 
+   transport https test
+   ssl profile restconf
+   port 5900
+   ip access-group custom-cp
+!
+end

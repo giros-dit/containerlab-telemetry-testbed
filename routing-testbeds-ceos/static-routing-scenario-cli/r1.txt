@@ -1,0 +1,35 @@
+!!! Arista cEOS r1 configuration !!!
+
+hostname r1
+username admin privilege 15 secret admin
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Management0
+   description "Management interface"
+!
+interface Ethernet1
+   description "LAN interface with switch s1"
+   ip address 192.168.1.1/24
+   no switchport
+!
+interface Ethernet2
+   description "Peering interface with router r2 (r1 <-> r2)"
+   ip address 10.10.10.1/30
+   no switchport
+!
+interface Ethernet3
+   description "Peering interface with router r3 (r1 <-> r3)"
+   ip address 10.10.11.1/30
+   no switchport
+!
+ip routing
+!
+ip route 192.168.2.0 255.255.255.0 10.10.10.2
+ip route 192.168.3.0 255.255.255.0 10.10.11.2
+!
+end
