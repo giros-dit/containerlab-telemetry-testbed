@@ -9,7 +9,7 @@ topology:
       image: wbitt/network-multitool:latest
     arista_ceos:
       type: arista-ceos
-      group: switch
+      group: router
       image: ceos:4.34.5M
     ovs-bridge:
       type: ovs-bridge

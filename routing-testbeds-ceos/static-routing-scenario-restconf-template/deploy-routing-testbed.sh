@@ -78,4 +78,31 @@ echo 'Done!'
 echo ''
 echo ''
 
+echo 'Configuring self-signed cert for RESTCONF management on router "r1" container...'
+sleep 2
+sudo docker exec -it clab-routing-testbed-r1 Cli -p 15 -c "security pki certificate generate self-signed restconf.crt key restconf.key generate rsa 2048 parameters common-name restconf"
+
+echo 'Done!'
+
+echo ''
+echo ''
+
+echo 'Configuring self-signed cert for RESTCONF management on router "r2" container...'
+sleep 2
+sudo docker exec -it clab-routing-testbed-r2 Cli -p 15 -c "security pki certificate generate self-signed restconf.crt key restconf.key generate rsa 2048 parameters common-name restconf"
+
+echo 'Done!'
+
+echo ''
+echo ''
+
+echo 'Configuring self-signed cert for RESTCONF management on router "r3" container...'
+sleep 2
+sudo docker exec -it clab-routing-testbed-r3 Cli -p 15 -c "security pki certificate generate self-signed restconf.crt key restconf.key generate rsa 2048 parameters common-name restconf"
+
+echo 'Done!'
+
+echo ''
+echo ''
+
 echo 'All done!'
